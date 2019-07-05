@@ -1,0 +1,41 @@
+<?php
+
+namespace Imzhi\InspiniaAdmin\Requests;
+
+use App\Models\AdminUser;
+use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class ManageUserDistribute extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'id' => 'required',
+            'role_ids' => 'array',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id.required' => '参数错误',
+            'role_ids.array'  => '角色数据错误',
+        ];
+    }
+}

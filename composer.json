@@ -1,0 +1,37 @@
+{
+    "name": "imzhi/jf-admin",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0.0",
+        "mews/captcha": "^2.2",
+        "spatie/laravel-activitylog": "^2.8",
+        "spatie/laravel-permission": "^2.37",
+        "laravel/framework": "~5.5"
+    },
+    "require-dev": {
+        "laravel/laravel": "~5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Imzhi\\InspiniaAdmin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Imzhi\\InspiniaAdmin\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Imzhi\\InspiniaAdmin\\InspiniaAdminServiceProvider"
+            ],
+            "aliases": {
+                "InspiniaAdmin": "Imzhi\\InspiniaAdmin\\Facades\\InspiniaAdmin"
+            }
+
+        }
+    },
+    "minimum-stability": "dev"
+}

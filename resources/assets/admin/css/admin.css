@@ -1,0 +1,50 @@
+#side-menu .fa {
+    width: 13px;
+}
+
+.wrapper-content {
+    padding: 5px 0;
+}
+
+.p-l-n {
+    padding-left: 0;
+}
+
+.p-l-m {
+    padding-left: 20px;
+}
+
+.p-r-n {
+    padding-right: 0;
+}
+
+.golden-table tbody tr td {
+    font-size: 14px;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.golden-table tbody tr td.td-break {
+    font-size: 14px;
+    vertical-align: middle;
+    overflow: inherit;
+    text-overflow: inherit;
+    white-space: inherit;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.golden_captcha {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
