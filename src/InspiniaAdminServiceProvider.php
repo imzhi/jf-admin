@@ -62,6 +62,7 @@ class InspiniaAdminServiceProvider extends ServiceProvider
             'prefix' => 'admin',
             'namespace' => '\Imzhi\InspiniaAdmin\Controllers',
             'as' => 'admin::',
+            'middleware' => 'web',
             // 'domain' => '',
         ];
         app('router')->group($attributes, function ($router) {
@@ -69,7 +70,7 @@ class InspiniaAdminServiceProvider extends ServiceProvider
             $router->post('login', 'Auth\LoginController@login')->name('login');
             $router->get('logout', 'Auth\LoginController@logout')->name('logout');
 
-            $router->middleware('web', 'inspinia_admin')->group(function ($router) {
+            $router->middleware('inspinia_admin')->group(function ($router) {
                 // 首页
                 $router->get('', 'HomeController@showIndex')->name('show.index');
 
