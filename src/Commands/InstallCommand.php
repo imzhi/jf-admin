@@ -38,10 +38,13 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        if (AdminUser::count() == 0) {
-            $this->call('db:seed', ['--class' => \Imzhi\InspiniaAdmin\Seeds\AdminSeeder::class]);
+        if (AdminUser::count() !== 0) {
+            $this->comment('already installed');
+            return false;
         }
 
-        $this->line('<info>Complete.</info>');
+        $this->call('db:seed', ['--class' => \Imzhi\InspiniaAdmin\Seeds\AdminSeeder::class]);
+
+        $this->info('install successfully');
     }
 }

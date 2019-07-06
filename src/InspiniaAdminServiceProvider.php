@@ -11,6 +11,7 @@ class InspiniaAdminServiceProvider extends ServiceProvider
 {
     protected $commands = [
         Commands\InstallCommand::class,
+        Commands\ResetPasswordCommand::class,
     ];
 
     protected $routeMiddleware = [
