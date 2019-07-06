@@ -1,16 +1,16 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Repositories;
+namespace Imzhi\JFAdmin\Repositories;
 
 use Log;
 use Route;
 use Exception;
 use Carbon\Carbon;
-use Imzhi\InspiniaAdmin\Models\Role;
+use Imzhi\JFAdmin\Models\Role;
 use ReflectionMethod;
-use Imzhi\InspiniaAdmin\Models\AdminUser;
-use Imzhi\InspiniaAdmin\Models\Permission;
-use Imzhi\InspiniaAdmin\Models\PermissionExtra;
+use Imzhi\JFAdmin\Models\AdminUser;
+use Imzhi\JFAdmin\Models\Permission;
+use Imzhi\JFAdmin\Models\PermissionExtra;
 
 class ManageUserRepository
 {
@@ -40,13 +40,13 @@ class ManageUserRepository
                         $date_to->endOfDay(),
                     ]);
                 } catch (Exception $e) {
-                    Log::warning('admin::show.manageuser.list daterange err', compact('daterange'));
+                    Log::warning('jf-admin::show.manageuser.list daterange err', compact('daterange'));
                 }
             }
         })
             ->with('roles')
             ->orderBy('id')
-            ->paginate(config('admin.pagination.num'));
+            ->paginate(config('jf-admin.pagination.num'));
 
         return $list;
     }
@@ -121,7 +121,7 @@ class ManageUserRepository
 
     public function roles()
     {
-        $list = Role::orderBy('id')->paginate(config('admin.pagination.num'));
+        $list = Role::orderBy('id')->paginate(config('jf-admin.pagination.num'));
 
         return $list;
     }
@@ -187,7 +187,7 @@ class ManageUserRepository
         })
             ->with('permissionExtra')
             ->orderBy('id')
-            ->paginate(config('admin.pagination.num'));
+            ->paginate(config('jf-admin.pagination.num'));
 
         return $list;
     }
@@ -198,10 +198,10 @@ class ManageUserRepository
         foreach (Route::getRoutes() as $route) {
             $route_name = $route->getName();
             $middleware = (array) $route->getAction()['middleware'];
-            $prefix_len = strlen('admin::');
+            $prefix_len = strlen('jf-admin::');
             if (strlen($route_name) > $prefix_len
-                && starts_with($route_name, 'admin::')
-                && in_array('inspinia_admin', $middleware)) {
+                && starts_with($route_name, 'jf-admin::')
+                && in_array('jf-admin', $middleware)) {
                 $action_name = $route->getActionName();
                 $action_arr = explode('@', $action_name);
                 if (!method_exists($action_arr[0], $action_arr[1])) {
@@ -212,7 +212,7 @@ class ManageUserRepository
                     $comment = explode("\n", $reflection_method->getDocComment())[1];
                     $comment = trim($comment, " \t\n\r\0\x0B*");
                 } catch (Exception $e) {
-                    Log::debug('admin::manageuser.permissions.detect err', [
+                    Log::debug('jf-admin::manageuser.permissions.detect err', [
                         'message' => $e->getMessage(),
                         'file' => $e->getFile(),
                         'line' => $e->getLine(),

@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Models;
+namespace Imzhi\JFAdmin\Models;
 
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\Access\Gate;

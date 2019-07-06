@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Models;
+namespace Imzhi\JFAdmin\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

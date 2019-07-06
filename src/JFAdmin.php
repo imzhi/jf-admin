@@ -1,29 +1,29 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin;
+namespace Imzhi\JFAdmin;
 
 /**
- * Class InspiniaAdmin.
+ * Class JFAdmin.
  */
-class InspiniaAdmin
+class JFAdmin
 {
     const VERSION = '1.0.0';
 
     public function routes()
     {
         $attributes = [
-            'prefix' => 'admin',
-            'namespace' => '\Imzhi\InspiniaAdmin\Controllers',
-            'as' => 'admin::',
+            'prefix' => config('jf-admin.route.prefix'),
+            'as' => config('jf-admin.route.as'),
+            'domain' => config('jf-admin.route.domain'),
             'middleware' => 'web',
-            'domain' => null,
+            'namespace' => '\Imzhi\JFAdmin\Controllers',
         ];
         app('router')->group($attributes, function ($router) {
             $router->get('login', 'Auth\LoginController@showLoginForm')->name('show.login');
             $router->post('login', 'Auth\LoginController@login')->name('login');
             $router->get('logout', 'Auth\LoginController@logout')->name('logout');
 
-            $router->middleware('inspinia_admin')->group(function ($router) {
+            $router->middleware('jf-admin')->group(function ($router) {
                 // 修改密码
                 $router->get('profile/pwd', 'ProfileController@showPwd')->name('show.profile.pwd');
                 $router->post('profile/pwd', 'ProfileController@pwd')->name('profile.pwd');

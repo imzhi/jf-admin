@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Requests;
+namespace Imzhi\JFAdmin\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

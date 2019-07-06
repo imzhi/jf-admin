@@ -14,21 +14,21 @@
     },
     "autoload": {
         "psr-4": {
-            "Imzhi\\InspiniaAdmin\\": "src/"
+            "Imzhi\\JFAdmin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Imzhi\\InspiniaAdmin\\Tests\\": "tests/"
+            "Imzhi\\JFAdmin\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Imzhi\\InspiniaAdmin\\InspiniaAdminServiceProvider"
+                "Imzhi\\JFAdmin\\JFAdminServiceProvider"
             ],
             "aliases": {
-                "InspiniaAdmin": "Imzhi\\InspiniaAdmin\\Facades\\InspiniaAdmin"
+                "JFAdmin": "Imzhi\\JFAdmin\\Facades\\JFAdmin"
             }
 
         }

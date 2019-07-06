@@ -1,4 +1,4 @@
-@extends('admin::layouts.base')
+@extends('jf-admin::layouts.base')
 
 @section('title', '首页')
 

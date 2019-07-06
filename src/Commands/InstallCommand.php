@@ -1,9 +1,9 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Commands;
+namespace Imzhi\JFAdmin\Console;
 
 use Illuminate\Console\Command;
-use Imzhi\InspiniaAdmin\Models\AdminUser;
+use Imzhi\JFAdmin\Models\AdminUser;
 
 class InstallCommand extends Command
 {
@@ -12,14 +12,14 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'inspinia-admin:install';
+    protected $signature = 'jf-admin:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'install the inspinia-admin package';
+    protected $description = 'install the jf-admin package';
 
     /**
      * Create a new command instance.
@@ -54,7 +54,7 @@ class InstallCommand extends Command
             return false;
         }
 
-        $this->call('db:seed', ['--class' => \Imzhi\InspiniaAdmin\Seeds\AdminSeeder::class]);
+        $this->call('db:seed', ['--class' => \Imzhi\JFAdmin\Seeds\AdminSeeder::class]);
 
         $this->info('database init successfully');
         return true;
@@ -62,7 +62,7 @@ class InstallCommand extends Command
 
     protected function initDirectory()
     {
-        $directory = app_path('Admin');
+        $directory = config('jf-admin.directory');
 
         $this->makeDir($directory);
 
@@ -70,7 +70,9 @@ class InstallCommand extends Command
 
         $this->createFile("{$directory}/routes.php", 'routes');
 
-        $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController');
+        $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController', function ($content) {
+            return str_replace('DummyNamespace', config('jf-admin.route.namespace'), $content);
+        });
     }
 
     protected function makeDir($path = '')
@@ -86,15 +88,17 @@ class InstallCommand extends Command
         return true;
     }
 
-    protected function createFile($path, $stub)
+    protected function createFile($path, $stub, $callback = null)
     {
         $file = str_replace(base_path(), '', $path);
         if (file_exists($path)) {
             $this->comment("file \"{$file}\" already init");
-            return false;
+            // return false;
         }
 
-        $this->laravel['files']->put($path, $this->getStub($stub));
+        $file_content = $this->getStub($stub);
+        $file_content = $callback ? $callback($file_content) : $file_content;
+        $this->laravel['files']->put($path, $file_content);
 
         $this->info("file \"{$file}\" init successfully");
         return true;

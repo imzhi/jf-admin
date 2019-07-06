@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Models;
+namespace Imzhi\JFAdmin\Models;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;
 

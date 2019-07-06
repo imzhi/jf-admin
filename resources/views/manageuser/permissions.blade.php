@@ -1,4 +1,4 @@
-@extends('admin::layouts.base')
+@extends('jf-admin::layouts.base')
 
 @section('title', '管理员 - 权限管理')
 
@@ -72,13 +72,13 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="1000">{{ __('admin.no_data') }}</td>
+                                    <td class="text-center" colspan="1000">{{ __('jf-admin.no_data') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
-                    @include('admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+                    @include('jf-admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                 </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
         window.form_submit = $('#detect-btn');
         form_submit.prop('disabled', true);
         $.ajax({
-            url: '{{ route('admin::manageuser.permissions.detect') }}',
+            url: '{{ route('jf-admin::manageuser.permissions.detect') }}',
             success: function (result) {
                 if (result.err) {
                     form_submit.prop('disabled', false);
@@ -128,7 +128,7 @@
             form_submit.prop('disabled', true);
             ajax_data.push({name: 'name', value: value});
             $.ajax({
-                url: '{{ route('admin::manageuser.permissions.group') }}',
+                url: '{{ route('jf-admin::manageuser.permissions.group') }}',
                 data: ajax_data,
                 success: function (result) {
                     if (result.err) {

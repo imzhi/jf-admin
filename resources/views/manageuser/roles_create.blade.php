@@ -1,4 +1,4 @@
-@extends('admin::layouts.base')
+@extends('jf-admin::layouts.base')
 
 @section('title', "管理员 - 角色管理 - {$title}")
 
@@ -70,7 +70,7 @@
         window.form_submit = $('#submit-btn');
         form_submit.prop('disabled', true);
         $.ajax({
-            url: '{{ route('admin::manageuser.roles.create') }}',
+            url: '{{ route('jf-admin::manageuser.roles.create') }}',
             data: $this.serializeArray(),
             success: function (result) {
                 if (result.err) {

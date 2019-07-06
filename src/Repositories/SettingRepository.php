@@ -1,12 +1,12 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Repositories;
+namespace Imzhi\JFAdmin\Repositories;
 
 use Log;
 use Cache;
 use Exception;
 use Carbon\Carbon;
-use Imzhi\InspiniaAdmin\Models\Setting;
+use Imzhi\JFAdmin\Models\Setting;
 
 class SettingRepository
 {

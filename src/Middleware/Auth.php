@@ -1,15 +1,15 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Middleware;
+namespace Imzhi\JFAdmin\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Contracts\Auth\Factory as AuthFactory;
 
-class MyAuth
+class Auth
 {
     protected $auth;
 
-    public function __construct(Auth $auth)
+    public function __construct(AuthFactory $auth)
     {
         $this->auth = $auth;
     }
@@ -20,7 +20,7 @@ class MyAuth
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['err' => true, 'msg' => '未授权'], 401);
             } else {
-                return redirect()->guest('admin/login')->withErrors('未授权');
+                return redirect()->guest(route('jf-admin::show.login'))->withErrors('未授权');
             }
         }
 
@@ -31,7 +31,7 @@ class MyAuth
                 return response()->json(['err' => true, 'msg' => $msg], 401);
             } else {
                 $this->auth->guard('admin_user')->logout();
-                return redirect()->guest('admin/login')->with('layer_msg', $msg);
+                return redirect()->guest(route('jf-admin::show.login'))->with('layer_msg', $msg);
             }
         }
 

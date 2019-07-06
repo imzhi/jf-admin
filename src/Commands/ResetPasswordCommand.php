@@ -1,9 +1,9 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Commands;
+namespace Imzhi\JFAdmin\Console;
 
 use Illuminate\Console\Command;
-use Imzhi\InspiniaAdmin\Models\AdminUser;
+use Imzhi\JFAdmin\Models\AdminUser;
 
 class ResetPasswordCommand extends Command
 {
@@ -12,7 +12,7 @@ class ResetPasswordCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'inspinia-admin:reset-password';
+    protected $signature = 'jf-admin:reset-password';
 
     /**
      * The console command description.

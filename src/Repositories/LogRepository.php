@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Repositories;
+namespace Imzhi\JFAdmin\Repositories;
 
 use Carbon\Carbon;
 use Spatie\Activitylog\Models\Activity;
@@ -21,12 +21,12 @@ class LogRepository
                         $date_to->endOfDay(),
                     ]);
                 } catch (Exception $e) {
-                    Log::warning('admin::show.setting.log daterange err', compact('daterange'));
+                    Log::warning('jf-admin::show.setting.log daterange err', compact('daterange'));
                 }
             }
         })
             ->orderBy('id', 'desc')
-            ->paginate(config('admin.pagination.num'));
+            ->paginate(config('jf-admin.pagination.num'));
 
         return $list;
     }

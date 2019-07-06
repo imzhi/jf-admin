@@ -1,12 +1,12 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Middleware;
+namespace Imzhi\JFAdmin\Middleware;
 
 use Route;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
-class MyAuthPermission
+class Permission
 {
     protected $auth;
 

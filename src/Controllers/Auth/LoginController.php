@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Controllers\Auth;
+namespace Imzhi\JFAdmin\Controllers\Auth;
 
 use Auth;
 use Illuminate\Http\Request;
@@ -50,7 +50,7 @@ class LoginController extends Controller
      */
     protected function showLoginForm()
     {
-        return view('admin::auth.login.login');
+        return view('jf-admin::auth.login.login');
     }
 
     /**
@@ -62,7 +62,7 @@ class LoginController extends Controller
 
         $img_captcha = $this->request->input('img_captcha');
         if (!captcha_check($img_captcha)) {
-            // return ['err' => true, 'msg' => '图形验证码不正确'];
+            return ['err' => true, 'msg' => '图形验证码不正确'];
         }
 
         if ($this->hasTooManyLoginAttempts($this->request)) {
@@ -89,7 +89,7 @@ class LoginController extends Controller
 
         $this->request->session()->invalidate();
 
-        return redirect()->route('admin::show.login');
+        return redirect()->route('jf-admin::show.login');
     }
 
     protected function username()
@@ -120,7 +120,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $redirect = $request->session()->pull('url.intended', route('admin::show.index'));
+        $redirect = $request->session()->pull('url.intended', route('jf-admin::show.index'));
         return [
             'err' => false,
             'msg' => '登录成功',

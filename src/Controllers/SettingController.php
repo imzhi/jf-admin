@@ -1,11 +1,11 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Controllers;
+namespace Imzhi\JFAdmin\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Imzhi\InspiniaAdmin\Models\Setting;
-use Imzhi\InspiniaAdmin\Repositories\LogRepository;
+use Imzhi\JFAdmin\Models\Setting;
+use Imzhi\JFAdmin\Repositories\LogRepository;
 
 class SettingController extends Controller
 {
@@ -25,6 +25,6 @@ class SettingController extends Controller
         $list = $this->logRepository->list($request_data);
 
         $nav_id = 'setting.log';
-        return view('admin::setting.log', compact('list', 'request_data', 'nav_id'));
+        return view('jf-admin::setting.log', compact('list', 'request_data', 'nav_id'));
     }
 }

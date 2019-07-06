@@ -1,8 +1,8 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Requests;
+namespace Imzhi\JFAdmin\Requests;
 
-use App\Models\AdminUser;
+use Imzhi\JFAdmin\Models\AdminUser;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 

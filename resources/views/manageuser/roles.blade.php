@@ -1,4 +1,4 @@
-@extends('admin::layouts.base')
+@extends('jf-admin::layouts.base')
 
 @section('title', '管理员 - 角色管理')
 
@@ -36,7 +36,7 @@
                 <div class="ibox-content clearfix">
                     <div class="row">
                         <div class="col-md-3">
-                            <a href="{{ route('admin::show.manageuser.roles.create') }}" class="btn btn-w-m btn-default">新增</a>
+                            <a href="{{ route('jf-admin::show.manageuser.roles.create') }}" class="btn btn-w-m btn-default">新增</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -62,18 +62,18 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <a href="{{ route('admin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-w-m btn-default">编辑</a>
-                                        <a href="{{ route('admin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-w-m btn-default">分配权限</a>
+                                        <a href="{{ route('jf-admin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-w-m btn-default">编辑</a>
+                                        <a href="{{ route('jf-admin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-w-m btn-default">分配权限</a>
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="1000">{{ __('admin.no_data') }}</td>
+                                    <td class="text-center" colspan="1000">{{ __('jf-admin.no_data') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+                        @include('jf-admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
                 </div>
             </div>

@@ -1,15 +1,15 @@
 <?php
 
-use Imzhi\InspiniaAdmin\Facades\InspiniaAdmin;
+use Imzhi\JFAdmin\Facades\JFAdmin;
 
-InspiniaAdmin::routes();
+JFAdmin::routes();
 
 Route::group([
-    'prefix' => 'admin',
-    'namespace' => '\App\Admin\Controllers',
-    'as' => 'admin::',
-    'middleware' => 'web',
-    'domain' => null,
+    'prefix' => config('jf-admin.route.prefix'),
+    'namespace' => config('jf-admin.route.namespace'),
+    'as' => config('jf-admin.route.as'),
+    'middleware' => config('jf-admin.route.middleware'),
+    'domain' => config('jf-admin.route.domain'),
 ], function ($router) {
     // 首页
     $router->get('', 'HomeController@showIndex')->name('show.index');

@@ -1,8 +1,8 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Repositories;
+namespace Imzhi\JFAdmin\Repositories;
 
-use Imzhi\InspiniaAdmin\Models\AdminUser;
+use Imzhi\JFAdmin\Models\AdminUser;
 
 class AdminUserRepository
 {

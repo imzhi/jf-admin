@@ -1,6 +1,6 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Commands;
+namespace Imzhi\JFAdmin\Console;
 
 use Illuminate\Console\Command;
 
@@ -11,14 +11,14 @@ class UninstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'inspinia-admin:uninstall';
+    protected $signature = 'jf-admin:uninstall';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'uninstall the inspinia-admin package';
+    protected $description = 'uninstall the jf-admin package';
 
     /**
      * Create a new command instance.
@@ -37,14 +37,14 @@ class UninstallCommand extends Command
      */
     public function handle()
     {
-        if (!$this->confirm('confirm uninstall inspinia-admin package?')) {
+        if (!$this->confirm('confirm uninstall jf-admin package?')) {
             return;
         }
         $this->delFile(config_path('admin.php'));
 
-        $this->delDir(app_path('Admin'));
+        $this->delDir(config('jf-admin.directory'));
 
-        $this->delDir(public_path('vendor/inspinia-admin'));
+        $this->delDir(public_path('vendor/jf-admin'));
 
         $this->info('uninstall successfully');
     }

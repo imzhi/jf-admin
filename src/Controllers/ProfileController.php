@@ -1,11 +1,11 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Controllers;
+namespace Imzhi\JFAdmin\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Imzhi\InspiniaAdmin\Requests\Pwd;
-use Imzhi\InspiniaAdmin\Repositories\AdminUserRepository;
+use Imzhi\JFAdmin\Requests\Pwd;
+use Imzhi\JFAdmin\Repositories\AdminUserRepository;
 
 class ProfileController extends Controller
 {
@@ -23,7 +23,7 @@ class ProfileController extends Controller
      */
     protected function showPwd()
     {
-        return view('admin::profile.pwd');
+        return view('jf-admin::profile.pwd');
     }
 
     /**

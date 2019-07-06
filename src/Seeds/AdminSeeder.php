@@ -1,11 +1,11 @@
 <?php
 
-namespace Imzhi\InspiniaAdmin\Seeds;
+namespace Imzhi\JFAdmin\Seeds;
 
 use Carbon\Carbon;
+use Imzhi\JFAdmin\Models\Role;
 use Illuminate\Database\Seeder;
-use Imzhi\InspiniaAdmin\Models\Role;
-use Imzhi\InspiniaAdmin\Models\AdminUser;
+use Imzhi\JFAdmin\Models\AdminUser;
 
 class AdminSeeder extends Seeder
 {
@@ -23,7 +23,7 @@ class AdminSeeder extends Seeder
         ]);
 
         $role = Role::firstOrCreate([
-            'name' => '超级管理员',
+            'name' => config('jf-admin.super_role'),
             'guard_name' => 'admin_user',
         ]);
 
