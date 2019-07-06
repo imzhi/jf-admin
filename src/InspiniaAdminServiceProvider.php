@@ -2,6 +2,9 @@
 
 namespace Imzhi\InspiniaAdmin;
 
+use Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class InspiniaAdminServiceProvider extends ServiceProvider
@@ -38,6 +41,14 @@ class InspiniaAdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'inspinia-admin-migrations');
             $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/inspinia-admin')], 'inspinia-admin-assets');
         }
+
+        View::composer('admin::*', function ($view) {
+            $view->with('user', Auth::guard('admin_user')->user());
+        });
+
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('超级管理员') ? true : null;
+        });
     }
 
     /**

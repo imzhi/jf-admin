@@ -3,8 +3,6 @@
 namespace Imzhi\InspiniaAdmin\Repositories;
 
 use Carbon\Carbon;
-use App\Models\Log as LogModel;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity;
 
 class LogRepository

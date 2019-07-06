@@ -6,11 +6,11 @@ use Log;
 use Route;
 use Exception;
 use Carbon\Carbon;
-use App\Models\Role;
+use Imzhi\InspiniaAdmin\Models\Role;
 use ReflectionMethod;
-use App\Models\AdminUser;
-use App\Models\Permission;
-use App\Models\PermissionExtra;
+use Imzhi\InspiniaAdmin\Models\AdminUser;
+use Imzhi\InspiniaAdmin\Models\Permission;
+use Imzhi\InspiniaAdmin\Models\PermissionExtra;
 
 class ManageUserRepository
 {
@@ -197,8 +197,11 @@ class ManageUserRepository
         $routes_data = [];
         foreach (Route::getRoutes() as $route) {
             $route_name = $route->getName();
-            $middleware = $route->getAction()['middleware'];
-            if (strlen($route_name) > 7 && starts_with($route_name, 'admin::') && in_array('myauthpermission:admin_user', $middleware)) {
+            $middleware = (array) $route->getAction()['middleware'];
+            $prefix_len = strlen('admin::');
+            if (strlen($route_name) > $prefix_len
+                && starts_with($route_name, 'admin::')
+                && in_array('inspinia_admin', $middleware)) {
                 $action_name = $route->getActionName();
                 $action_arr = explode('@', $action_name);
                 if (!method_exists($action_arr[0], $action_arr[1])) {

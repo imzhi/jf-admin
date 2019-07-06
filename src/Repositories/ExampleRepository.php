@@ -3,7 +3,7 @@
 namespace Imzhi\InspiniaAdmin\Repositories;
 
 use Carbon\Carbon;
-use App\Models\User;
+use Imzhi\InspiniaAdmin\Models\User;
 
 class ExampleRepository
 {

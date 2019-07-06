@@ -6,7 +6,7 @@ use Log;
 use Cache;
 use Exception;
 use Carbon\Carbon;
-use App\Models\Setting;
+use Imzhi\InspiniaAdmin\Models\Setting;
 
 class SettingRepository
 {

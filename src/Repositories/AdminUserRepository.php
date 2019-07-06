@@ -2,7 +2,7 @@
 
 namespace Imzhi\InspiniaAdmin\Repositories;
 
-use App\Models\AdminUser;
+use Imzhi\InspiniaAdmin\Models\AdminUser;
 
 class AdminUserRepository
 {
