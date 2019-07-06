@@ -91,7 +91,7 @@ class InstallCommand extends Command
         $file = str_replace(base_path(), '', $path);
         if (file_exists($path)) {
             $this->comment("file \"{$file}\" already init");
-            // return false;
+            return false;
         }
 
         $this->laravel['files']->put($path, $this->getStub($stub));
