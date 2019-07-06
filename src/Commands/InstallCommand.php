@@ -38,13 +38,70 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        $this->initDatabase();
+
+        $this->initDirectory();
+
+        $this->info('install successfully');
+    }
+
+    protected function initDatabase()
+    {
+        $this->call('migrate');
+
         if (AdminUser::count() !== 0) {
-            $this->comment('already installed');
+            $this->comment('database already init');
             return false;
         }
 
         $this->call('db:seed', ['--class' => \Imzhi\InspiniaAdmin\Seeds\AdminSeeder::class]);
 
-        $this->info('install successfully');
+        $this->info('database init successfully');
+        return true;
+    }
+
+    protected function initDirectory()
+    {
+        $directory = app_path('Admin');
+
+        $this->makeDir($directory);
+
+        $this->makeDir("{$directory}/Controllers");
+
+        $this->createFile("{$directory}/routes.php", 'routes');
+
+        $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController');
+    }
+
+    protected function makeDir($path = '')
+    {
+        $result = $this->laravel['files']->makeDirectory($path, 0755, true, true);
+        $directory = str_replace(base_path(), '', $path);
+        if (!$result) {
+            $this->comment("directory \"{$directory}\" already init");
+            return false;
+        }
+
+        $this->info("directory \"{$directory}\" init successfully");
+        return true;
+    }
+
+    protected function createFile($path, $stub)
+    {
+        $file = str_replace(base_path(), '', $path);
+        if (file_exists($path)) {
+            $this->comment("file \"{$file}\" already init");
+            // return false;
+        }
+
+        $this->laravel['files']->put($path, $this->getStub($stub));
+
+        $this->info("file \"{$file}\" init successfully");
+        return true;
+    }
+
+    protected function getStub($name)
+    {
+        return $this->laravel['files']->get(__DIR__ . "/stubs/{$name}.stub");
     }
 }

@@ -1,0 +1,16 @@
+<?php
+
+use Imzhi\InspiniaAdmin\Facades\InspiniaAdmin;
+
+InspiniaAdmin::routes();
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => '\App\Admin\Controllers',
+    'as' => 'admin::',
+    'middleware' => 'web',
+    'domain' => null,
+], function ($router) {
+    // 首页
+    $router->get('', 'HomeController@showIndex')->name('show.index');
+});

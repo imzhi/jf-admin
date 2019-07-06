@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Imzhi\InspiniaAdmin\Requests\Pwd;
 use Imzhi\InspiniaAdmin\Repositories\AdminUserRepository;
 
-class HomeController extends Controller
+class ProfileController extends Controller
 {
     protected $request;
     protected $adminUserRepository;
@@ -19,24 +19,15 @@ class HomeController extends Controller
     }
 
     /**
-     * 后台首页
-     */
-    protected function showIndex()
-    {
-        $nav_id = 'home.index';
-        return view('admin::home.index', compact('nav_id'));
-    }
-
-    /**
-     * 修改密码页面
+     * 公共功能-修改密码页面
      */
     protected function showPwd()
     {
-        return view('admin::home.pwd');
+        return view('admin::profile.pwd');
     }
 
     /**
-     * 修改密码操作
+     * 公共功能-修改密码操作
      */
     protected function pwd(Pwd $request)
     {

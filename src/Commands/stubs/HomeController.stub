@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Admin\Controllers;
+
+use App\Http\Controllers\Controller;
+
+class HomeController extends Controller
+{
+    /**
+     * 公共功能-后台首页
+     */
+    protected function showIndex()
+    {
+        $nav_id = 'home.index';
+        return view('admin::home.index', compact('nav_id'));
+    }
+}

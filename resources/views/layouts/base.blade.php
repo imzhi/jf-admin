@@ -38,7 +38,7 @@
                                 <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="dropdown-item" href="{{ route('admin::show.pwd') }}">修改密码</a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin::show.profile.pwd') }}">修改密码</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ route('admin::logout') }}">退出</a></li>
                             </ul>

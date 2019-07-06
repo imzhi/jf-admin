@@ -65,7 +65,7 @@
         window.form_submit = $('#submit-btn');
         form_submit.prop('disabled', true);
         $.ajax({
-            url: '{{ route('admin::pwd') }}',
+            url: '{{ route('admin::profile.pwd') }}',
             data: $this.serializeArray(),
             success: function (result) {
                 if (result.err) {
