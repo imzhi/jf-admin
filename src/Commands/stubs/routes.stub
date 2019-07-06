@@ -5,11 +5,11 @@ use Imzhi\JFAdmin\Facades\JFAdmin;
 JFAdmin::routes();
 
 Route::group([
-    'prefix' => config('jf-admin.route.prefix'),
-    'namespace' => config('jf-admin.route.namespace'),
-    'as' => config('jf-admin.route.as'),
-    'middleware' => config('jf-admin.route.middleware'),
-    'domain' => config('jf-admin.route.domain'),
+    'prefix' => config('jfadmin.route.prefix'),
+    'namespace' => config('jfadmin.route.namespace'),
+    'as' => config('jfadmin.route.as'),
+    'middleware' => config('jfadmin.route.middleware'),
+    'domain' => config('jfadmin.route.domain'),
 ], function ($router) {
     // 首页
     $router->get('', 'HomeController@showIndex')->name('show.index');

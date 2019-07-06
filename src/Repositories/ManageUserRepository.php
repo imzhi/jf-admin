@@ -40,13 +40,13 @@ class ManageUserRepository
                         $date_to->endOfDay(),
                     ]);
                 } catch (Exception $e) {
-                    Log::warning('jf-admin::show.manageuser.list daterange err', compact('daterange'));
+                    Log::warning('jfadmin::show.manageuser.list daterange err', compact('daterange'));
                 }
             }
         })
             ->with('roles')
             ->orderBy('id')
-            ->paginate(config('jf-admin.pagination.num'));
+            ->paginate(config('jfadmin.pagination.num'));
 
         return $list;
     }
@@ -121,7 +121,7 @@ class ManageUserRepository
 
     public function roles()
     {
-        $list = Role::orderBy('id')->paginate(config('jf-admin.pagination.num'));
+        $list = Role::orderBy('id')->paginate(config('jfadmin.pagination.num'));
 
         return $list;
     }
@@ -187,7 +187,7 @@ class ManageUserRepository
         })
             ->with('permissionExtra')
             ->orderBy('id')
-            ->paginate(config('jf-admin.pagination.num'));
+            ->paginate(config('jfadmin.pagination.num'));
 
         return $list;
     }
@@ -198,10 +198,10 @@ class ManageUserRepository
         foreach (Route::getRoutes() as $route) {
             $route_name = $route->getName();
             $middleware = (array) $route->getAction()['middleware'];
-            $prefix_len = strlen('jf-admin::');
+            $prefix_len = strlen('jfadmin::');
             if (strlen($route_name) > $prefix_len
-                && starts_with($route_name, 'jf-admin::')
-                && in_array('jf-admin', $middleware)) {
+                && starts_with($route_name, 'jfadmin::')
+                && in_array('jfadmin', $middleware)) {
                 $action_name = $route->getActionName();
                 $action_arr = explode('@', $action_name);
                 if (!method_exists($action_arr[0], $action_arr[1])) {
@@ -212,7 +212,7 @@ class ManageUserRepository
                     $comment = explode("\n", $reflection_method->getDocComment())[1];
                     $comment = trim($comment, " \t\n\r\0\x0B*");
                 } catch (Exception $e) {
-                    Log::debug('jf-admin::manageuser.permissions.detect err', [
+                    Log::debug('jfadmin::manageuser.permissions.detect err', [
                         'message' => $e->getMessage(),
                         'file' => $e->getFile(),
                         'line' => $e->getLine(),

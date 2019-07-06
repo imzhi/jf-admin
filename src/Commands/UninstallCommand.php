@@ -11,7 +11,7 @@ class UninstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'jf-admin:uninstall';
+    protected $signature = 'jfadmin:uninstall';
 
     /**
      * The console command description.
@@ -42,9 +42,9 @@ class UninstallCommand extends Command
         }
         $this->delFile(config_path('admin.php'));
 
-        $this->delDir(config('jf-admin.directory'));
+        $this->delDir(config('jfadmin.directory'));
 
-        $this->delDir(public_path('vendor/jf-admin'));
+        $this->delDir(public_path('vendor/jfadmin'));
 
         $this->info('uninstall successfully');
     }

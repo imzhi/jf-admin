@@ -12,6 +12,6 @@ class HomeController extends Controller
     protected function showIndex()
     {
         $nav_id = 'home.index';
-        return view('jf-admin::home.index', compact('nav_id'));
+        return view('jfadmin::home.index', compact('nav_id'));
     }
 }

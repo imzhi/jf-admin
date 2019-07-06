@@ -12,9 +12,9 @@ class JFAdmin
     public function routes()
     {
         $attributes = [
-            'prefix' => config('jf-admin.route.prefix'),
-            'as' => config('jf-admin.route.as'),
-            'domain' => config('jf-admin.route.domain'),
+            'prefix' => config('jfadmin.route.prefix'),
+            'as' => config('jfadmin.route.as'),
+            'domain' => config('jfadmin.route.domain'),
             'middleware' => 'web',
             'namespace' => '\Imzhi\JFAdmin\Controllers',
         ];
@@ -23,7 +23,7 @@ class JFAdmin
             $router->post('login', 'Auth\LoginController@login')->name('login');
             $router->get('logout', 'Auth\LoginController@logout')->name('logout');
 
-            $router->middleware('jf-admin')->group(function ($router) {
+            $router->middleware('jfadmin')->group(function ($router) {
                 // 修改密码
                 $router->get('profile/pwd', 'ProfileController@showPwd')->name('show.profile.pwd');
                 $router->post('profile/pwd', 'ProfileController@pwd')->name('profile.pwd');

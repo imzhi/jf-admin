@@ -23,7 +23,7 @@ class ProfileController extends Controller
      */
     protected function showPwd()
     {
-        return view('jf-admin::profile.pwd');
+        return view('jfadmin::profile.pwd');
     }
 
     /**

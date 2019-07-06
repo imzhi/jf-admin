@@ -29,10 +29,10 @@ return [
     ],
 
     'route' => [
-        'prefix' => 'jf-admin',
+        'prefix' => 'jfadmin',
         'namespace' => 'App\\JFAdmin\\Controllers',
-        'as' => 'jf-admin::',
-        'middleware' => ['web', 'jf-admin'],
+        'as' => 'jfadmin::',
+        'middleware' => ['web', 'jfadmin'],
         'domain' => env('JFA_ROUTE_DOMAIN'),
     ],
 ];

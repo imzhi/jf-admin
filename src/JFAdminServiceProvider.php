@@ -16,14 +16,14 @@ class JFAdminServiceProvider extends ServiceProvider
     ];
 
     protected $routeMiddleware = [
-        'jf-admin.auth' => Middleware\Auth::class,
-        'jf-admin.permission' => Middleware\Permission::class,
+        'jfadmin.auth' => Middleware\Auth::class,
+        'jfadmin.permission' => Middleware\Permission::class,
     ];
 
     protected $middlewareGroups = [
-        'jf-admin' => [
-            'jf-admin.auth',
-            'jf-admin.permission',
+        'jfadmin' => [
+            'jfadmin.auth',
+            'jfadmin.permission',
         ],
     ];
 
@@ -34,24 +34,24 @@ class JFAdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'jf-admin');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'jfadmin');
 
-        if (file_exists($routes = config('jf-admin.directory') . '/routes.php')) {
+        if (file_exists($routes = config('jfadmin.directory') . '/routes.php')) {
             $this->loadRoutesFrom($routes);
         }
 
-        View::composer('jf-admin::*', function ($view) {
+        View::composer('jfadmin::*', function ($view) {
             $view->with('admin_user', Auth::guard('admin_user')->user());
         });
 
         Gate::before(function ($user, $ability) {
-            return $user->hasRole(config('jf-admin.super_role')) ? true : null;
+            return $user->hasRole(config('jfadmin.super_role')) ? true : null;
         });
 
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__ . '/../config' => config_path()], 'jf-admin-config');
-            $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'jf-admin-migrations');
-            $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/jf-admin')], 'jf-admin-assets');
+            $this->publishes([__DIR__ . '/../config' => config_path()], 'jfadmin-config');
+            $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'jfadmin-migrations');
+            $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/jfadmin')], 'jfadmin-assets');
         }
     }
 
@@ -82,6 +82,6 @@ class JFAdminServiceProvider extends ServiceProvider
 
     protected function loadAdminAuthConfig()
     {
-        config(array_dot(config('jf-admin.auth', []), 'auth.'));
+        config(array_dot(config('jfadmin.auth', []), 'auth.'));
     }
 }

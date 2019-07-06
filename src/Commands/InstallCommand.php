@@ -12,7 +12,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'jf-admin:install';
+    protected $signature = 'jfadmin:install';
 
     /**
      * The console command description.
@@ -62,7 +62,7 @@ class InstallCommand extends Command
 
     protected function initDirectory()
     {
-        $directory = config('jf-admin.directory');
+        $directory = config('jfadmin.directory');
 
         $this->makeDir($directory);
 
@@ -71,7 +71,7 @@ class InstallCommand extends Command
         $this->createFile("{$directory}/routes.php", 'routes');
 
         $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController', function ($content) {
-            return str_replace('DummyNamespace', config('jf-admin.route.namespace'), $content);
+            return str_replace('DummyNamespace', config('jfadmin.route.namespace'), $content);
         });
     }
 

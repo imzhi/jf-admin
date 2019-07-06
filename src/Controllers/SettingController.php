@@ -25,6 +25,6 @@ class SettingController extends Controller
         $list = $this->logRepository->list($request_data);
 
         $nav_id = 'setting.log';
-        return view('jf-admin::setting.log', compact('list', 'request_data', 'nav_id'));
+        return view('jfadmin::setting.log', compact('list', 'request_data', 'nav_id'));
     }
 }

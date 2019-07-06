@@ -21,12 +21,12 @@ class LogRepository
                         $date_to->endOfDay(),
                     ]);
                 } catch (Exception $e) {
-                    Log::warning('jf-admin::show.setting.log daterange err', compact('daterange'));
+                    Log::warning('jfadmin::show.setting.log daterange err', compact('daterange'));
                 }
             }
         })
             ->orderBy('id', 'desc')
-            ->paginate(config('jf-admin.pagination.num'));
+            ->paginate(config('jfadmin.pagination.num'));
 
         return $list;
     }

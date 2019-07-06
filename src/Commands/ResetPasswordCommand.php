@@ -12,7 +12,7 @@ class ResetPasswordCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'jf-admin:reset-password';
+    protected $signature = 'jfadmin:reset-password';
 
     /**
      * The console command description.

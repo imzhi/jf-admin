@@ -50,7 +50,7 @@ class LoginController extends Controller
      */
     protected function showLoginForm()
     {
-        return view('jf-admin::auth.login.login');
+        return view('jfadmin::auth.login.login');
     }
 
     /**
@@ -89,7 +89,7 @@ class LoginController extends Controller
 
         $this->request->session()->invalidate();
 
-        return redirect()->route('jf-admin::show.login');
+        return redirect()->route('jfadmin::show.login');
     }
 
     protected function username()
@@ -120,7 +120,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $redirect = $request->session()->pull('url.intended', route('jf-admin::show.index'));
+        $redirect = $request->session()->pull('url.intended', route('jfadmin::show.index'));
         return [
             'err' => false,
             'msg' => '登录成功',
