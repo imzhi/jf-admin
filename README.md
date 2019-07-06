@@ -19,7 +19,7 @@ php artisan migrate --step
 然后发布本扩展包的文件并执行迁移：
 
 ```
-php artisan vendor:publish --provider="Imzhi\InspiniaAdmin\InspiniaAdminServiceProvider"
+php artisan vendor:publish --provider="Imzhi\JFAdmin\JFAdminServiceProvider"
 php artisan migrate --step
 php artisan jf-admin:install
 ```
