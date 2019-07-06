@@ -17,12 +17,14 @@ class InspiniaAdminServiceProvider extends ServiceProvider
     protected $routeMiddleware = [
         'inspinia_admin.myauth' => Middleware\MyAuth::class,
         'inspinia_admin.myauthpermission' => Middleware\MyAuthPermission::class,
+        'inspinia_admin.myauthsession' => Middleware\MyAuthSession::class,
     ];
 
     protected $middlewareGroups = [
         'inspinia_admin' => [
             'inspinia_admin.myauth',
             'inspinia_admin.myauthpermission',
+            'inspinia_admin.myauthsession',
         ],
     ];
 
