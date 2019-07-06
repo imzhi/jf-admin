@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('admin::layouts.base')
 
 @section('title', '设置 - 操作日志')
 
@@ -104,7 +104,7 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('admin.layouts.pagination', ['paginator' => $list->appends($request_data)])
+                        @include('admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
                 </div>
             </div>

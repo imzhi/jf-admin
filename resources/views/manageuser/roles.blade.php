@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('admin::layouts.base')
 
 @section('title', '管理员 - 角色管理')
 
@@ -73,7 +73,7 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('admin.layouts.pagination', ['paginator' => $list->appends($request_data)])
+                        @include('admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.base')
+@extends('admin::layouts.base')
 
 @section('title', "管理员 - 角色管理 - {$title}")
 
