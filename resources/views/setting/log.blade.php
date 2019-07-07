@@ -1,10 +1,10 @@
-@extends('jf-admin::layouts.base')
+@extends('jfadmin::layouts.base')
 
 @section('title', '设置 - 操作日志')
 
 @section('head_css')
 @parent
-<link href="{{ asset('vendor/jf-admin/inspinia/css/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet">
+<link href="{{ asset('vendor/jfadmin/inspinia/css/plugins/daterangepicker/daterangepicker-bs3.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="ibox-content clearfix">
-                    <form action="{{ route('jf-admin::show.setting.log') }}">
+                    <form action="{{ route('jfadmin::show.setting.log') }}">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group row">
@@ -99,12 +99,12 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jf-admin.no_data') }}</td>
+                                    <td class="text-center" colspan="1000">{{ __('jfadmin.no_data') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('jf-admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+                        @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
                 </div>
             </div>
@@ -131,9 +131,9 @@
 
 @section('foot_js')
 @parent
-<script src="{{ asset('vendor/jf-admin/inspinia/js/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<script src="{{ asset('vendor/jf-admin/inspinia/js/plugins/diff_match_patch/javascript/diff_match_patch.js') }}"></script>
-<script src="{{ asset('vendor/jf-admin/inspinia/js/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js') }}"></script>
+<script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/diff_match_patch/javascript/diff_match_patch.js') }}"></script>
+<script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js') }}"></script>
 <script>
     $('[name=daterange]').daterangepicker(_jfla.daterangepicker_conf);
 

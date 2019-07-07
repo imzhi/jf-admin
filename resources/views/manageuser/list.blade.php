@@ -1,4 +1,4 @@
-@extends('jf-admin::layouts.base')
+@extends('jfadmin::layouts.base')
 
 @section('title', '管理员 - 成员管理')
 
@@ -36,10 +36,10 @@
                 <div class="ibox-content clearfix">
                     <div class="row">
                         <div class="col-md-3">
-                            <a href="{{ route('jf-admin::show.manageuser.create') }}" class="btn btn-w-m btn-default">新增</a>
+                            <a href="{{ route('jfadmin::show.manageuser.create') }}" class="btn btn-w-m btn-default">新增</a>
                         </div>
                     </div>
-                    <form action="{{ route('jf-admin::show.manageuser.list') }}">
+                    <form action="{{ route('jfadmin::show.manageuser.list') }}">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group row">
@@ -104,21 +104,21 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->login_time }}</td>
                                     <td>{{ $item->login_ip }}</td>
-                                    <td>{{ $status_rels[$item->status] ?? __('jf-admin.unknow') }}</td>
+                                    <td>{{ $status_rels[$item->status] ?? __('jfadmin.unknow') }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-default status-btn" data-status="{{ 1 - $item->status }}">{{ $status_rels[1 - $item->status] ?? __('jf-admin.unknow') }}</button>
-                                        <a href="{{ route('jf-admin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
-                                        <a href="{{ route('jf-admin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default">分配角色</a>
+                                        <button type="button" class="btn btn-default status-btn" data-status="{{ 1 - $item->status }}">{{ $status_rels[1 - $item->status] ?? __('jfadmin.unknow') }}</button>
+                                        <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default">分配角色</a>
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jf-admin.no_data') }}</td>
+                                    <td class="text-center" colspan="1000">{{ __('jfadmin.no_data') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('jf-admin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+                        @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
             window.form_submit = btn;
             form_submit.prop('disabled', true);
             $.ajax({
-                url: '{{ route('jf-admin::manageuser.status') }}',
+                url: '{{ route('jfadmin::manageuser.status') }}',
                 data: {user_id: user_id, status: status},
                 success: function (result) {
                     if (result.err) {

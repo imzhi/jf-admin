@@ -1,4 +1,4 @@
-@extends('jf-admin::layouts.base')
+@extends('jfadmin::layouts.base')
 
 @section('title', "管理员 - 角色管理 - 分配权限")
 
@@ -91,7 +91,7 @@
             window.form_submit = $('#submit-btn');
             form_submit.prop('disabled', true);
             $.ajax({
-                url: '{{ route('jf-admin::manageuser.roles.distribute') }}',
+                url: '{{ route('jfadmin::manageuser.roles.distribute') }}',
                 data: $this.serializeArray(),
                 success: function (result) {
                     if (result.err) {

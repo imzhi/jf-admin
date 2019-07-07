@@ -1,4 +1,4 @@
-@extends('jf-admin::layouts.base')
+@extends('jfadmin::layouts.base')
 
 @section('title', '修改密码')
 
@@ -65,7 +65,7 @@
         window.form_submit = $('#submit-btn');
         form_submit.prop('disabled', true);
         $.ajax({
-            url: '{{ route('jf-admin::profile.pwd') }}',
+            url: '{{ route('jfadmin::profile.pwd') }}',
             data: $this.serializeArray(),
             success: function (result) {
                 if (result.err) {

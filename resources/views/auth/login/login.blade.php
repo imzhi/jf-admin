@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('jf-admin.title') }}</title>
-    <link href="{{ asset('vendor/jf-admin/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jf-admin/inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jf-admin/inspinia/css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jf-admin/inspinia/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jf-admin/admin/css/admin.css') }}" rel="stylesheet">
+    <title>{{ config('jfadmin.title') }}</title>
+    <link href="{{ asset('vendor/jfadmin/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/inspinia/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/inspinia/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/admin/css/admin.css') }}" rel="stylesheet">
 </head>
 <body class="gray-bg">
     <div class="loginColumns animated fadeInDown">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="font-bold text-center">{{ config('jf-admin.title') }}</h2>
+                <h2 class="font-bold text-center">{{ config('jfadmin.title') }}</h2>
                 <div class="ibox-content">
                     <form id="mform">
                         <div class="form-group">
@@ -42,10 +42,10 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('vendor/jf-admin/inspinia/js/jquery-2.1.1.js') }}"></script>
-    <script src="{{ asset('vendor/jf-admin/inspinia/js/plugins/fullcalendar/moment.min.js') }}"></script>
-    <script src="{{ asset('vendor/jf-admin/admin/js/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('vendor/jf-admin/admin/js/admin.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/inspinia/js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/fullcalendar/moment.min.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/admin/js/plugins/layer/layer.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/admin/js/admin.js') }}"></script>
     <script>
         @if(session('layer_msg'))
         layer.alert('{{ session('layer_msg') }}');
@@ -59,7 +59,7 @@
             window.form_submit = $this.find('[type=submit]');
             form_submit.prop('disabled', true);
             $.ajax({
-                url: '{{ route('jf-admin::login') }}',
+                url: '{{ route('jfadmin::login') }}',
                 data: $this.serializeArray(),
                 success: function (result) {
                     if (result.err) {
