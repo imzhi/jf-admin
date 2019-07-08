@@ -40,7 +40,13 @@ class UninstallCommand extends Command
         if (!$this->confirm('confirm uninstall jf-admin package?')) {
             return;
         }
-        $this->delFile(config_path('admin.php'));
+
+        if (!file_exists(config_path('jfadmin.php'))) {
+            $this->comment('uninstall already');
+            return;
+        }
+
+        $this->delFile(config_path('jfadmin.php'));
 
         $this->delDir(config('jfadmin.directory'));
 
