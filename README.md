@@ -20,8 +20,7 @@ php artisan migrate --step
 
 ```
 php artisan vendor:publish --provider="Imzhi\JFAdmin\JFAdminServiceProvider"
-php artisan migrate --step
-php artisan jf-admin:install
+php artisan jfadmin:install
 ```
 
-访问路径为：http://xxx.test/jf-admin
+访问路径为：http://xxx.test/jfadmin
