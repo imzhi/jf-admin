@@ -1,11 +1,11 @@
 # jf-admin
 
-jf-admin 是基于 Laravel 的一个基础后台管理模板，前端框架使用 inspinia。
+jf-admin 是 Laravel扩展包，提供最基本的后台管理，前端主题使用 inspinia。
 
 ## 安装说明
 
 ```
-composer require imzhi/jf-admin
+composer require imzhi/jf-admin "dev-master"
 ```
 
 本扩展包依赖于 laravel-permission、laravel-activitylog，请发布迁移文件：
