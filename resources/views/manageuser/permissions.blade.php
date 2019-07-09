@@ -98,10 +98,10 @@
             success: function (result) {
                 if (result.err) {
                     form_submit.prop('disabled', false);
-                    layer.msg(result.msg, {shift: 6});
+                    JFA.swalError(result.msg);
                     return false;
                 }
-                layer.msg(result.msg, {icon: 1, time: 1000}, function() {
+                JFA.swalSuccess(result.msg, function() {
                     if (result.reload) {
                         location.reload();
                     }
@@ -117,26 +117,24 @@
     $('#group-btn').click(function() {
         var ajax_data = $('.id_class').serializeArray();
         if (!ajax_data.length) {
-            layer.msg('未勾选要分组的权限', {shift: 6});
+            JFA.swalError('未勾选要分组的权限');
             return false;
         }
-        layer.prompt({
-            title: '分组名称',
-        }, function(value, layerPrompt, elem) {
-            layer.close(layerPrompt);
+
+        JFA.swalPrompt('分组名称', function(swalResult) {
             window.form_submit = $('#group-btn');
             form_submit.prop('disabled', true);
-            ajax_data.push({name: 'name', value: value});
+            ajax_data.push({name: 'name', value: swalResult.value});
             $.ajax({
                 url: '{{ route('jfadmin::manageuser.permissions.group') }}',
                 data: ajax_data,
                 success: function (result) {
                     if (result.err) {
                         form_submit.prop('disabled', false);
-                        layer.msg(result.msg, {shift: 6});
+                        JFA.swalError(result.msg);
                         return false;
                     }
-                    layer.msg(result.msg, {icon: 1, time: 1000}, function() {
+                    JFA.swalSuccess(result.msg, function() {
                         if (result.reload) {
                             location.reload();
                         }
@@ -146,7 +144,46 @@
                     });
                 }
             });
-        });
+        })
+        // Swal.fire({
+        //     title: '分组名称',
+        //     input: 'text',
+        //     confirmButtonText: '确定',
+        //     showCancelButton: true,
+        //     cancelButtonText: '取消',
+        //     allowOutsideClick: false,
+        //     allowEscapeKey: false,
+        //     inputValidator: function(value) {
+        //         if (!value) {
+        //             return '分组名称必填';
+        //         }
+        //     }
+        // }).then(function(swalResult) {
+        //     if (swalResult.value) {
+        //         window.form_submit = $('#group-btn');
+        //         form_submit.prop('disabled', true);
+        //         ajax_data.push({name: 'name', value: swalResult.value});
+        //         $.ajax({
+        //             url: '{{ route('jfadmin::manageuser.permissions.group') }}',
+        //             data: ajax_data,
+        //             success: function (result) {
+        //                 if (result.err) {
+        //                     form_submit.prop('disabled', false);
+        //                     JFA.swalError(result.msg);
+        //                     return false;
+        //                 }
+        //                 JFA.swalSuccess(result.msg, function() {
+        //                     if (result.reload) {
+        //                         location.reload();
+        //                     }
+        //                     if (result.redirect) {
+        //                         location.href = '{!! url()->previous() !!}';
+        //                     }
+        //                 });
+        //             }
+        //         });
+        //     }
+        // });
     });
 </script>
 @endsection

@@ -133,9 +133,7 @@
     $('.status-btn').click(function() {
         var btn = $(this);
         var text = btn.text().trim();
-        layer.confirm('确定要' + text + '该账号吗？', function (layerIndex) {
-            layer.close(layerIndex);
-
+        JFA.swalQuestion('确定要' + text + '该账号吗？', function() {
             var user_id = btn.closest('tr').data('id');
             var status = btn.data('status');
 
@@ -147,10 +145,10 @@
                 success: function (result) {
                     if (result.err) {
                         form_submit.prop('disabled', false);
-                        layer.msg(result.msg, {shift: 6});
+                        JFA.swalError(result.msg);
                         return false;
                     }
-                    layer.msg(result.msg, {icon: 1, time: 1000}, function() {
+                    JFA.swalSuccess(result.msg, function() {
                         if (result.reload) {
                             location.reload();
                         }

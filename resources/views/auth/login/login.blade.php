@@ -11,7 +11,7 @@
     <link href="{{ asset('vendor/jfadmin/inspinia/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jfadmin/inspinia/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jfadmin/inspinia/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jfadmin/admin/css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/jfadmin/jfadmin.css') }}" rel="stylesheet">
 </head>
 <body class="gray-bg">
     <div class="loginColumns animated fadeInDown">
@@ -44,14 +44,14 @@
     </div>
     <script src="{{ asset('vendor/jfadmin/inspinia/js/jquery-2.1.1.js') }}"></script>
     <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/fullcalendar/moment.min.js') }}"></script>
-    <script src="{{ asset('vendor/jfadmin/admin/js/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('vendor/jfadmin/admin/js/admin.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/jfadmin/plugins/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/jfadmin/jfadmin.js') }}"></script>
     <script>
         @if(session('layer_msg'))
-        layer.alert('{{ session('layer_msg') }}');
+        JFA.swalInfo('{{ session('layer_msg') }}');
         @endif
         @if(isset($errors) && count($errors))
-        layer.msg('{{ $errors->first() }}', {shift: 6});
+        JFA.swalError('{{ $errors->first() }}');
         @endif
 
         $('#mform').submit(function() {
@@ -64,11 +64,12 @@
                 success: function (result) {
                     if (result.err) {
                         form_submit.prop('disabled', false);
-                        layer.msg(result.msg, {shift: 6});
                         $('.golden_captcha').click();
+                        JFA.swalError(result.msg);
                         return false;
                     }
-                    layer.msg(result.msg, {icon: 1, time: 1000}, function() {
+
+                    JFA.swalSuccess(result.msg, function() {
                         if (result.reload) {
                             location.reload();
                         }

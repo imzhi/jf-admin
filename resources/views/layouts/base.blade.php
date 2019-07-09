@@ -13,7 +13,7 @@
     <link href="{{ asset('vendor/jfadmin/inspinia/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jfadmin/inspinia/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jfadmin/inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/jfadmin/admin/css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/jfadmin/jfadmin/jfadmin.css') }}" rel="stylesheet">
     @show
 </head>
 <body>
@@ -134,15 +134,15 @@
     <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/fullcalendar/moment.min.js') }}"></script>
     <script src="{{ asset('vendor/jfadmin/inspinia/js/inspinia.js') }}"></script>
     <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ asset('vendor/jfadmin/admin/js/plugins/layer/layer.js') }}"></script>
-    <script src="{{ asset('vendor/jfadmin/admin/js/admin.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/jfadmin/plugins/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('vendor/jfadmin/jfadmin/jfadmin.js') }}"></script>
     @show
     <script>
         @if(session('layer_msg'))
-        layer.alert('{{ session('layer_msg') }}');
+        JFA.swalInfo('{{ session('layer_msg') }}');
         @endif
         @if(isset($errors) && count($errors))
-        layer.msg('{{ $errors->first() }}', {shift: 6});
+        JFA.swalError('{{ $errors->first() }}');
         @endif
     </script>
 </body>
