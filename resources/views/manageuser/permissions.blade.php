@@ -36,8 +36,8 @@
                 <div class="ibox-content clearfix">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="javascript:" class="btn btn-w-m btn-default" id="detect-btn">检测</a>
-                            <a href="javascript:" class="btn btn-w-m btn-default" id="group-btn">分组</a>
+                            <a href="javascript:" class="btn btn-default" id="detect-btn">检测</a>
+                            <a href="javascript:" class="btn btn-default" id="group-btn">分组</a>
                         </div>
                     </div>
                     <div class="table-responsive">

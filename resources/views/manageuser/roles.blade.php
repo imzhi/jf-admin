@@ -36,7 +36,7 @@
                 <div class="ibox-content clearfix">
                     <div class="row">
                         <div class="col-md-3">
-                            <a href="{{ route('jfadmin::show.manageuser.roles.create') }}" class="btn btn-w-m btn-default">新增</a>
+                            <a href="{{ route('jfadmin::show.manageuser.roles.create') }}" class="btn btn-default">新增</a>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -56,8 +56,8 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <a href="{{ route('jfadmin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-w-m btn-default">编辑</a>
-                                        <a href="{{ route('jfadmin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-w-m btn-default">分配权限</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-default">编辑</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-default">分配权限</a>
                                     </td>
                                 </tr>
                                 @empty

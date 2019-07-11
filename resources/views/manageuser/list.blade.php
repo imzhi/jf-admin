@@ -34,9 +34,9 @@
                     </div>
                 </div>
                 <div class="ibox-content clearfix">
-                    <div class="row">
+                    <div class="row form-group">
                         <div class="col-md-3">
-                            <a href="{{ route('jfadmin::show.manageuser.create') }}" class="btn btn-w-m btn-default">新增</a>
+                            <a href="{{ route('jfadmin::show.manageuser.create') }}" class="btn btn-default">新增</a>
                         </div>
                     </div>
                     <form action="{{ route('jfadmin::show.manageuser.list') }}">
@@ -53,19 +53,19 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">所属角色</label>
                                     <div class="col-md-8">
-                                        <div class="input-group">
-                                            <select class="form-control" name="role" style="padding: 0 12px;">
-                                                <option value="">选择角色</option>
-                                                @foreach($roles as $item)
-                                                <option value="{{ $item->id }}" {{  !empty($request_data['role']) && $request_data['role'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-primary">搜索</button>
-                                            </span>
-                                        </div>
+                                        <select class="form-control" name="role" style="padding: 0 12px;">
+                                            <option value="">选择角色</option>
+                                            @foreach($roles as $item)
+                                            <option value="{{ $item->id }}" {{  !empty($request_data['role']) && $request_data['role'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">搜索</button>
                             </div>
                         </div>
                     </form>

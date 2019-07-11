@@ -45,14 +45,14 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">日期</label>
                                     <div class="col-md-8">
-                                        <div class="input-group">
-                                            <input class="form-control" type="text" name="daterange" value="{{ $request_data['daterange'] ?? '' }}">
-                                            <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-primary"> 搜索</button>
-                                            </span>
-                                        </div>
+                                        <input class="form-control" type="text" name="daterange" value="{{ $request_data['daterange'] ?? null }}">
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary"> 搜索</button>
                             </div>
                         </div>
                     </form>
