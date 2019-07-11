@@ -71,25 +71,15 @@
                     </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="80px">
-                                <col width="150px">
-                                <col width="220px">
-                                <col width="200px">
-                                <col width="200px">
-                                <col width="120px">
-                                <col width="100px">
-                                <col>
-                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>用户名</th>
-                                    <th>所属角色</th>
-                                    <th>创建时间</th>
-                                    <th>登录时间</th>
-                                    <th>登录IP</th>
-                                    <th>状态</th>
+                                    <th width="80px">ID</th>
+                                    <th width="150px">用户名</th>
+                                    <th width="220px">所属角色</th>
+                                    <th width="200px">创建时间</th>
+                                    <th width="200px">登录时间</th>
+                                    <th width="120px">登录IP</th>
+                                    <th width="100px">状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -118,8 +108,8 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
+                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                 </div>
             </div>
         </div>

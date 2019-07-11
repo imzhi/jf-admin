@@ -58,28 +58,17 @@
                     </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="80px">
-                                <col width="150px">
-                                <col>
-                                <col width="200px">
-                                <col width="80px">
-                                <col width="200px">
-                                <col width="80px">
-                                <col width="150px">
-                                <col width="80px">
-                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>名称</th>
+                                    <th width="80px">ID</th>
+                                    <th width="150px">名称</th>
                                     <th>描述</th>
-                                    <th>表模型</th>
-                                    <th>表ID</th>
-                                    <th>操作员模型</th>
-                                    <th>操作员ID</th>
-                                    <th>操作时间</th>
-                                    <th>操作</th>
+                                    <th width="200px">表模型</th>
+                                    <th width="80px">表ID</th>
+                                    <th width="200px">操作员模型</th>
+                                    <th width="80px">操作员ID</th>
+                                    <th width="200px">操作时间</th>
+                                    <th width="80px">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,9 +77,13 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->log_name }}</td>
                                     <td>{{ $item->description }}</td>
-                                    <td>{{ $item->subject_type }}</td>
+                                    <td class="td-break">
+                                        <div style="width: 200px;">{{ $item->subject_type }}</div>
+                                    </td>
                                     <td>{{ $item->subject_id }}</td>
-                                    <td>{{ $item->causer_type }}</td>
+                                    <td class="td-break">
+                                        <div style="width: 200px;">{{ $item->causer_type }}</div>
+                                    </td>
                                     <td>{{ $item->causer_id }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
@@ -104,8 +97,8 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
+                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                 </div>
             </div>
         </div>
@@ -135,7 +128,7 @@
 <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/diff_match_patch/javascript/diff_match_patch.js') }}"></script>
 <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js') }}"></script>
 <script>
-    $('[name=daterange]').daterangepicker(_jfla.daterangepicker_conf);
+    $('[name=daterange]').daterangepicker(JFA.daterangepicker_conf);
 
     // 操作日志详情
     $('#log-detail-modal').on('show.bs.modal', function (evt) {

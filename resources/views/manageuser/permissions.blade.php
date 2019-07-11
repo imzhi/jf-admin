@@ -42,22 +42,14 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="40px">
-                                <col width="80px">
-                                <col width="200px">
-                                <col width="350px">
-                                <col>
-                                <col width="200px">
-                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
-                                    <th>ID</th>
-                                    <th>分组</th>
-                                    <th>权限</th>
+                                    <th width="40px"><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
+                                    <th width="80px">ID</th>
+                                    <th width="200px">分组</th>
+                                    <th width="350px">权限</th>
                                     <th>路由</th>
-                                    <th>创建时间</th>
+                                    <th width="200px">创建时间</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -18,6 +18,10 @@
     padding-right: 0;
 }
 
+.golden-table thead th {
+    white-space: nowrap;
+}
+
 .golden-table tbody tr td {
     font-size: 14px;
     vertical-align: middle;
@@ -26,8 +30,6 @@
 }
 
 .golden-table tbody tr td.td-break {
-    font-size: 14px;
-    vertical-align: middle;
     overflow: inherit;
     text-overflow: inherit;
     white-space: inherit;

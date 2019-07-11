@@ -41,17 +41,11 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="80px">
-                                <col width="150px">
-                                <col width="200px">
-                                <col>
-                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>角色名称</th>
-                                    <th>创建时间</th>
+                                    <th width="80px">ID</th>
+                                    <th width="150px">角色名称</th>
+                                    <th width="200px">创建时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -73,8 +67,8 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                     </div>
+                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
                 </div>
             </div>
         </div>
