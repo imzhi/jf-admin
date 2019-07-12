@@ -63,16 +63,27 @@ class InstallCommand extends Command
     protected function initDirectory()
     {
         $directory = config('jfadmin.directory');
+        $view_directory = config('jfadmin.view.directory');
 
         $this->makeDir($directory);
 
         $this->makeDir("{$directory}/Controllers");
+
+        $this->makeDir("{$view_directory}/home");
+
+        $this->makeDir("{$view_directory}/layouts");
 
         $this->createFile("{$directory}/routes.php", 'routes');
 
         $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController', function ($content) {
             return str_replace('DummyNamespace', config('jfadmin.route.namespace'), $content);
         });
+
+        $this->createFile("{$view_directory}/layouts/base.blade.php", 'base.blade');
+
+        $this->createFile("{$view_directory}/layouts/pagination.blade.php", 'pagination.blade');
+
+        $this->createFile("{$view_directory}/home/index.blade.php", 'index.blade');
     }
 
     protected function makeDir($path = '')
@@ -93,7 +104,7 @@ class InstallCommand extends Command
         $file = str_replace(base_path(), '', $path);
         if (file_exists($path)) {
             $this->comment("file \"{$file}\" already init");
-            // return false;
+            return false;
         }
 
         $file_content = $this->getStub($stub);

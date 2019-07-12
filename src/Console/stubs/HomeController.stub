@@ -1,6 +1,6 @@
 <?php
 
-namespace DummyNamespace;
+namespace App\JFAdmin\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -11,7 +11,25 @@ class HomeController extends Controller
      */
     protected function showIndex()
     {
+        $envs = [
+            ['name' => 'PHP version',       'value' => PHP_VERSION],
+            ['name' => 'Laravel version',   'value' => app()->version()],
+            ['name' => 'CGI',               'value' => php_sapi_name()],
+            ['name' => 'Uname',             'value' => php_uname()],
+            ['name' => 'Server',            'value' => array_get($_SERVER, 'SERVER_SOFTWARE')],
+
+            ['name' => 'Cache driver',      'value' => config('cache.default')],
+            ['name' => 'Session driver',    'value' => config('session.driver')],
+            ['name' => 'Queue driver',      'value' => config('queue.default')],
+
+            ['name' => 'Timezone',          'value' => config('app.timezone')],
+            ['name' => 'Locale',            'value' => config('app.locale')],
+            ['name' => 'Env',               'value' => config('app.env')],
+            ['name' => 'URL',               'value' => config('app.url')],
+        ];
+        $json = file_get_contents(base_path('composer.json'));
+        $dependencies = json_decode($json, true)['require'];
         $nav_id = 'home.index';
-        return view('jfadmin::home.index', compact('nav_id'));
+        return view('jfadmin::home.index', compact('envs', 'dependencies', 'nav_id'));
     }
 }

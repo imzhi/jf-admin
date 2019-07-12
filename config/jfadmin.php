@@ -35,4 +35,9 @@ return [
         'middleware' => ['web', 'jfadmin'],
         'domain' => env('JFA_ROUTE_DOMAIN'),
     ],
+
+    'view' => [
+        'directory' => resource_path('views/jfadmin'),
+        'namespace' => 'jfadmin',
+    ],
 ];

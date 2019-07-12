@@ -34,13 +34,15 @@ class JFAdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'jfadmin');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', config('jfadmin.view.namespace'));
 
         if (file_exists($routes = config('jfadmin.directory') . '/routes.php')) {
             $this->loadRoutesFrom($routes);
         }
 
-        View::composer('jfadmin::*', function ($view) {
+        View::addNamespace('jfadmin', config('jfadmin.view.directory'));
+
+        View::composer(config('jfadmin.view.namespace') . '::*', function ($view) {
             $view->with('admin_user', Auth::guard('admin_user')->user());
         });
 

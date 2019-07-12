@@ -52,6 +52,8 @@ class UninstallCommand extends Command
 
         $this->delDir(public_path('vendor/jfadmin'));
 
+        $this->delDir(config('jfadmin.view.directory'));
+
         $this->info('uninstall successfully');
     }
 
