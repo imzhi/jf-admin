@@ -6,5 +6,5 @@ return [
         'throttle' => '登录次数过多，请在 :seconds 秒后重试',
     ],
 
-    'no_data' => '暂无数据',
+    'empty' => '暂无数据',
 ];

@@ -72,7 +72,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jfadmin.no_data') }}</td>
+                                    <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
                                 </tr>
                                 @endforelse
                             </tbody>

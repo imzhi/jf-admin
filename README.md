@@ -1,8 +1,8 @@
-# jf-admin
+## jf-admin
 
 jf-admin 是 Laravel扩展包，提供最基本的后台管理，前端主题使用 inspinia。
 
-## 安装说明
+### 安装说明
 
 ```
 composer require imzhi/jf-admin "dev-master"
