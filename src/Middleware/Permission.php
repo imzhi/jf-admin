@@ -4,20 +4,13 @@ namespace Imzhi\JFAdmin\Middleware;
 
 use Route;
 use Closure;
-use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Permission
 {
-    protected $auth;
-
-    public function __construct(Auth $auth)
-    {
-        $this->auth = $auth;
-    }
 
     public function handle($request, Closure $next)
     {
-        $user = $this->auth->guard('admin_user')->user();
+        $user = app('auth')->guard('admin_user')->user();
 
         $route_name = Route::currentRouteName();
         // if (!$user->hasPermissionTo($route_name)) {

@@ -26,7 +26,7 @@ class LogRepository
             }
         })
             ->orderBy('id', 'desc')
-            ->paginate(config('jfadmin.pagination.num'));
+            ->paginate(config('jfadmin.page_num'));
 
         return $list;
     }

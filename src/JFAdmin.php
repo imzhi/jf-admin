@@ -19,9 +19,9 @@ class JFAdmin
             'namespace' => '\Imzhi\JFAdmin\Controllers',
         ];
         app('router')->group($attributes, function ($router) {
-            $router->get('login', 'Auth\LoginController@showLoginForm')->name('show.login');
-            $router->post('login', 'Auth\LoginController@login')->name('login');
-            $router->get('logout', 'Auth\LoginController@logout')->name('logout');
+            $router->get('login', 'AuthController@showLoginForm')->name('show.login');
+            $router->post('login', 'AuthController@login')->name('login');
+            $router->get('logout', 'AuthController@logout')->name('logout');
 
             $router->middleware('jfadmin')->group(function ($router) {
                 // 修改密码

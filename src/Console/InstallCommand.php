@@ -63,27 +63,16 @@ class InstallCommand extends Command
     protected function initDirectory()
     {
         $directory = config('jfadmin.directory');
-        $view_directory = config('jfadmin.view.directory');
 
         $this->makeDir($directory);
 
         $this->makeDir("{$directory}/Controllers");
 
-        $this->makeDir("{$view_directory}/home");
-
-        $this->makeDir("{$view_directory}/layouts");
-
-        $this->createFile("{$directory}/routes.php", 'routes');
-
         $this->createFile("{$directory}/Controllers/HomeController.php", 'HomeController', function ($content) {
             return str_replace('DummyNamespace', config('jfadmin.route.namespace'), $content);
         });
 
-        $this->createFile("{$view_directory}/layouts/base.blade.php", 'base.blade');
-
-        $this->createFile("{$view_directory}/layouts/pagination.blade.php", 'pagination.blade');
-
-        $this->createFile("{$view_directory}/home/index.blade.php", 'index.blade');
+        $this->createFile("{$directory}/routes.php", 'routes');
     }
 
     protected function makeDir($path = '')
@@ -91,11 +80,11 @@ class InstallCommand extends Command
         $result = $this->laravel['files']->makeDirectory($path, 0755, true, true);
         $directory = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("directory \"{$directory}\" already init");
+            $this->comment("directory <{$directory}> already init");
             return false;
         }
 
-        $this->info("directory \"{$directory}\" init successfully");
+        $this->info("directory <{$directory}> init successfully");
         return true;
     }
 
@@ -103,7 +92,7 @@ class InstallCommand extends Command
     {
         $file = str_replace(base_path(), '', $path);
         if (file_exists($path)) {
-            $this->comment("file \"{$file}\" already init");
+            $this->comment("file <{$file}> already init");
             return false;
         }
 
@@ -111,7 +100,7 @@ class InstallCommand extends Command
         $file_content = $callback ? $callback($file_content) : $file_content;
         $this->laravel['files']->put($path, $file_content);
 
-        $this->info("file \"{$file}\" init successfully");
+        $this->info("file <{$file}> init successfully");
         return true;
     }
 

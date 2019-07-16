@@ -23,7 +23,8 @@ class ProfileController extends Controller
      */
     protected function showPwd()
     {
-        return view('jfadmin::profile.pwd');
+        $nav_id = 'profile.pwd';
+        return view('jfadmin::profile.pwd', compact('nav_id'));
     }
 
     /**

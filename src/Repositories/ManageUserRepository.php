@@ -6,8 +6,8 @@ use Log;
 use Route;
 use Exception;
 use Carbon\Carbon;
-use Imzhi\JFAdmin\Models\Role;
 use ReflectionMethod;
+use Imzhi\JFAdmin\Models\Role;
 use Imzhi\JFAdmin\Models\AdminUser;
 use Imzhi\JFAdmin\Models\Permission;
 use Imzhi\JFAdmin\Models\PermissionExtra;
@@ -46,7 +46,7 @@ class ManageUserRepository
         })
             ->with('roles')
             ->orderBy('id')
-            ->paginate(config('jfadmin.pagination.num'));
+            ->paginate(config('jfadmin.page_num'));
 
         return $list;
     }
@@ -121,7 +121,7 @@ class ManageUserRepository
 
     public function roles()
     {
-        $list = Role::orderBy('id')->paginate(config('jfadmin.pagination.num'));
+        $list = Role::orderBy('id')->paginate(config('jfadmin.page_num'));
 
         return $list;
     }
@@ -187,7 +187,7 @@ class ManageUserRepository
         })
             ->with('permissionExtra')
             ->orderBy('id')
-            ->paginate(config('jfadmin.pagination.num'));
+            ->paginate(config('jfadmin.page_num'));
 
         return $list;
     }
@@ -220,7 +220,7 @@ class ManageUserRepository
                     ]);
                     return [
                         'err' => true,
-                        'msg' => "检测出错。<br>控制器方法 {$action_name} 缺少注释。",
+                        'msg' => "检测出错。控制器方法 {$action_name} 缺少注释。",
                     ];
                 }
                 $routes_data[$route_name] = $comment;
@@ -270,7 +270,7 @@ class ManageUserRepository
         $count_mod = count($routes_mod);
         return [
             'err' => false,
-            'msg' => "操作成功。<br>新增 {$count_add} 条。<br>更新 {$count_mod} 条。<br>删除 {$count_del} 条。",
+            'msg' => "操作成功。新增 {$count_add} 条。更新 {$count_mod} 条。删除 {$count_del} 条。",
             'reload' => true,
         ];
     }
@@ -312,17 +312,17 @@ class ManageUserRepository
 
         // 先根据字符串排序，再根据指定顺序排序
         sort($keys, SORT_LOCALE_STRING);
-        usort($keys, function ($a, $b) {
-            $seq = [
-                1 => '基础操作',
-                '管理员管理',
-                '设置',
-                '示例页面',
-            ];
-            $search_a = array_search($a, $seq);
-            $search_b = array_search($b, $seq);
-            return $search_a === false && $search_b === false ? 0 : $search_a - $search_b;
-        });
+        // usort($keys, function ($a, $b) {
+        //     $seq = [
+        //         1 => '基础操作',
+        //         '管理员管理',
+        //         '设置',
+        //         '示例页面',
+        //     ];
+        //     $search_a = array_search($a, $seq);
+        //     $search_b = array_search($b, $seq);
+        //     return $search_a === false && $search_b === false ? 0 : $search_a - $search_b;
+        // });
 
         // 未分组添加到最后
         if ($searched !== false) {

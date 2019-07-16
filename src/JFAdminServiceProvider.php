@@ -2,9 +2,6 @@
 
 namespace Imzhi\JFAdmin;
 
-use Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class JFAdminServiceProvider extends ServiceProvider
@@ -17,6 +14,7 @@ class JFAdminServiceProvider extends ServiceProvider
 
     protected $routeMiddleware = [
         'jfadmin.auth' => Middleware\Auth::class,
+        'jfadmin.guest' => Middleware\Guest::class,
         'jfadmin.permission' => Middleware\Permission::class,
     ];
 
@@ -34,19 +32,19 @@ class JFAdminServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', config('jfadmin.view.namespace'));
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'jfadmin');
+
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'jfadmin');
 
         if (file_exists($routes = config('jfadmin.directory') . '/routes.php')) {
             $this->loadRoutesFrom($routes);
         }
 
-        View::addNamespace('jfadmin', config('jfadmin.view.directory'));
-
-        View::composer(config('jfadmin.view.namespace') . '::*', function ($view) {
-            $view->with('admin_user', Auth::guard('admin_user')->user());
+        $this->app['view']->composer('jfadmin::*', function ($view) {
+            $view->with('admin_user', $this->app['auth']->guard('admin_user')->user());
         });
 
-        Gate::before(function ($user, $ability) {
+        $this->app['Illuminate\Contracts\Auth\Access\Gate']->before(function ($user, $ability) {
             return $user->hasRole(config('jfadmin.super_role')) ? true : null;
         });
 
@@ -54,6 +52,9 @@ class JFAdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../config' => config_path()], 'jfadmin-config');
             $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'jfadmin-migrations');
             $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/jfadmin')], 'jfadmin-assets');
+            $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang/vendor/jfadmin')], 'jfadmin-lang');
+            $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/jfadmin/layouts')], 'jfadmin-views');
+            $this->publishes([__DIR__ . '/../resources/views/home' => resource_path('views/vendor/jfadmin/home')], 'jfadmin-views');
         }
     }
 
@@ -74,11 +75,11 @@ class JFAdminServiceProvider extends ServiceProvider
     protected function registerRouteMiddleware()
     {
         foreach ($this->routeMiddleware as $key => $middleware) {
-            app('router')->aliasMiddleware($key, $middleware);
+            $this->app['router']->aliasMiddleware($key, $middleware);
         }
 
         foreach ($this->middlewareGroups as $key => $middleware) {
-            app('router')->middlewareGroup($key, $middleware);
+            $this->app['router']->middlewareGroup($key, $middleware);
         }
     }
 

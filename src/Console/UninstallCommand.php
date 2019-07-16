@@ -52,7 +52,9 @@ class UninstallCommand extends Command
 
         $this->delDir(public_path('vendor/jfadmin'));
 
-        $this->delDir(config('jfadmin.view.directory'));
+        $this->delDir(resource_path('lang/vendor/jfadmin'));
+
+        $this->delDir(resource_path('views/vendor/jfadmin'));
 
         $this->info('uninstall successfully');
     }
@@ -62,11 +64,11 @@ class UninstallCommand extends Command
         $result = $this->laravel['files']->deleteDirectory($path);
         $directory = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("directory \"{$directory}\" delete failed");
+            $this->comment("directory <{$directory}> delete failed");
             return false;
         }
 
-        $this->info("directory \"{$directory}\" delete successfully");
+        $this->info("directory <{$directory}> delete successfully");
         return true;
     }
 
@@ -75,11 +77,11 @@ class UninstallCommand extends Command
         $result = $this->laravel['files']->delete($path);
         $file = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("file \"{$file}\" delete failed");
+            $this->comment("file <{$file}> delete failed");
             return false;
         }
 
-        $this->info("file \"{$file}\" delete successfully");
+        $this->info("file <{$file}> delete successfully");
         return true;
     }
 }

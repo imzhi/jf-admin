@@ -3,12 +3,11 @@
 return [
     'title' => 'jf-admin',
     'caption' => 'JFA+',
+    'welcome' => '欢迎来到 jf-admin 后台管理系统',
 
     'directory' => app_path('JFAdmin'),
 
-    'pagination' => [
-        'num' => 20,
-    ],
+    'page_num' => 20,
 
     'super_role' => 'Super Admin',
 
@@ -34,10 +33,5 @@ return [
         'as' => 'jfadmin::',
         'middleware' => ['web', 'jfadmin'],
         'domain' => env('JFA_ROUTE_DOMAIN'),
-    ],
-
-    'view' => [
-        'directory' => resource_path('views/jfadmin'),
-        'namespace' => 'jfadmin',
     ],
 ];
