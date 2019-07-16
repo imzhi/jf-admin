@@ -39,7 +39,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="mform">
+                            <form id="mform" data-url="{{ route('jfadmin::manageuser.roles.distribute') }}">
                                 <input type="hidden" name="id" value="{{ $data->id }}">
                                 <div class="form-group">
                                     <label>角色名称</label>
@@ -82,33 +82,49 @@
 @section('foot_js')
 @parent
 <script>
-    $('#mform').submit(function() {
-        var $this = $(this);
+    const JFA_PAGE = {
+        ajaxBtn: null,
+        ajaxStart: function() {
+            this.ajaxBtn.prop('disabled', true);
+        },
+        ajaxStop: function() {
+            this.ajaxBtn.prop('disabled', false);
+        },
+        submit: function() {
+            const that = this;
 
-        JFA.swalQuestion('确定提交吗？', function() {
-            window.form_submit = $('#submit-btn');
-            form_submit.prop('disabled', true);
-            $.ajax({
-                url: '{{ route('jfadmin::manageuser.roles.distribute') }}',
-                data: $this.serializeArray(),
-                success: function (result) {
-                    if (result.err) {
-                        form_submit.prop('disabled', false);
-                        JFA.swalError(result.msg);
-                        return false;
-                    }
-                    JFA.swalSuccess(result.msg, function() {
-                        if (result.reload) {
-                            location.reload();
-                        }
-                        if (result.redirect) {
-                            location.href = '{!! url()->previous() !!}';
+            $('#mform').submit(function() {
+                const $this = $(this);
+
+                JFA.swalQuestion('确定提交吗？', function() {
+                    that.ajaxBtn = $('#submit-btn');
+
+                    $.ajax({
+                        url: $this.data('url'),
+                        data: $this.serializeArray(),
+                        success: function (result) {
+                            if (result.err) {
+                                JFA.swalError(result.msg);
+                                return false;
+                            }
+                            JFA.swalSuccess(result.msg, function() {
+                                if (result.reload) {
+                                    location.reload();
+                                }
+                                if (result.redirect) {
+                                    location.href = '{!! url()->previous() !!}';
+                                }
+                            });
                         }
                     });
-                }
+                });
+                return false;
             });
-        });
-        return false;
-    });
+        },
+        init: function() {
+            this.submit();
+        }
+    };
+    JFA_PAGE.init();
 </script>
 @endsection

@@ -58,17 +58,28 @@
                     </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
+                            <colgroup>
+                                <col width="80px">
+                                <col width="150px">
+                                <col>
+                                <col width="200px">
+                                <col width="80px">
+                                <col width="200px">
+                                <col width="80px">
+                                <col width="200px">
+                                <col width="80px">
+                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th width="80px">ID</th>
-                                    <th width="150px">名称</th>
+                                    <th>ID</th>
+                                    <th>名称</th>
                                     <th>描述</th>
-                                    <th width="200px">表模型</th>
-                                    <th width="80px">表ID</th>
-                                    <th width="200px">操作员模型</th>
-                                    <th width="80px">操作员ID</th>
-                                    <th width="200px">操作时间</th>
-                                    <th width="80px">操作</th>
+                                    <th>表模型</th>
+                                    <th>表ID</th>
+                                    <th>操作员模型</th>
+                                    <th>操作员ID</th>
+                                    <th>操作时间</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,23 +139,29 @@
 <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/diff_match_patch/javascript/diff_match_patch.js') }}"></script>
 <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js') }}"></script>
 <script>
-    $('[name=daterange]').daterangepicker(JFA.daterangepicker_conf);
+    const JFA_PAGE = {
+        // 操作日志详情
+        detail: function() {
+            $('#log-detail-modal').on('show.bs.modal', function (evt) {
+                var btn = $(evt.relatedTarget);
+                var modal = $(this);
+                var modal_body = modal.find('.modal-body');
+                var tr = btn.closest('tr');
 
-    // 操作日志详情
-    $('#log-detail-modal').on('show.bs.modal', function (evt) {
-        var btn = $(evt.relatedTarget);
-        var modal = $(this);
-        var modal_body = modal.find('.modal-body');
-        var tr = btn.closest('tr');
-
-        var changes = tr.data('changes');
-        var original_con = changes.old && Object.keys(changes.old).length ? changes.old : {};
-        var changed_con = changes.attributes && Object.keys(changes.attributes).length ? changes.attributes : {};
-        $('.modal-body').prettyTextDiff({
-            originalContent: JSON.stringify(original_con, null, 2),
-            changedContent: JSON.stringify(changed_con, null, 2),
-            diffContainer: '.modal-changes',
-        });
-    });
+                var changes = tr.data('changes');
+                var original_con = changes.old && Object.keys(changes.old).length ? changes.old : {};
+                var changed_con = changes.attributes && Object.keys(changes.attributes).length ? changes.attributes : {};
+                $('.modal-body').prettyTextDiff({
+                    originalContent: JSON.stringify(original_con, null, 2),
+                    changedContent: JSON.stringify(changed_con, null, 2),
+                    diffContainer: '.modal-changes',
+                });
+            });
+        },
+        init: function() {
+            $('[name=daterange]').daterangepicker(JFA.daterangepicker_conf);
+        }
+    };
+    JFA_PAGE.init();
 </script>
 @endsection

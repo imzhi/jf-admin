@@ -5,19 +5,16 @@
             type: 'POST',
             dataType: 'JSON',
             error: function(resp, stat, text) {
-                if (window.form_submit) {
-                    form_submit.prop('disabled', false);
-                }
-                if (resp.status === 422) {
-                    var parse = $.parseJSON(resp.responseText);
+                if (resp.status === 422 || resp.status === 423) {
+                    const parse = $.parseJSON(resp.responseText);
                     if (parse && parse.errors) {
-                        var key = Object.keys(parse.errors)[0];
+                        const key = Object.keys(parse.errors)[0];
                         JFA.swalError(parse.errors[key][0], {shift: 6});
                     }
                     return false;
                 } else {
                     try {
-                        var parse = $.parseJSON(resp.responseText);
+                        const parse = $.parseJSON(resp.responseText);
                         if (parse && parse.err) {
                             alert(parse.msg);
                         }
@@ -28,7 +25,20 @@
                 }
             },
         });
+
+        $(document).ajaxStart(function(event, jqxhr, settings) {
+            $.isFunction(JFA_PAGE.ajaxStart) && JFA_PAGE.ajaxStart();
+        });
+
+        $(document).ajaxStop(function(event, jqxhr, settings) {
+            $.isFunction(JFA_PAGE.ajaxStop) && JFA_PAGE.ajaxStop();
+        });
+
+        $(document).ajaxError(function(event, jqxhr, settings) {
+            $.isFunction(JFA_PAGE.ajaxError) && JFA_PAGE.ajaxError();
+        });
     };
+
     const checkAll = function() {
         const $ibox_con = $('.ibox-content');
         const $check_all = $('.checkbox_all[type=checkbox]');
@@ -53,6 +63,7 @@
             $el.iCheck($target.length && $target.serializeArray().length === $target.length ? 'check' : 'uncheck');
         });
     };
+
     const iCheck = function() {
         const $el = $('.i-checks');
         if (!$el.length || !jQuery().iCheck) {
@@ -63,6 +74,11 @@
             radioClass: 'iradio_square-green',
         });
     };
+
+    const tooltip = function() {
+        $('[data-toggle=tooltip]').tooltip();
+    };
+
     const JFA = {
         csrf_token: $('meta[name=csrf-token]').eq(0).attr('content'),
         daterangepicker_conf: {
@@ -92,48 +108,53 @@
             ajaxSetup();
             checkAll();
             iCheck();
+            tooltip();
         },
-        swalInfo: function(text, callback) {
-            Swal.fire({
+        swalInfo: function(text, callback, options) {
+            const defaults = {
                 type: 'info',
                 title: '信息',
                 text: text,
                 confirmButtonText: '确定',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-            }).then(function(result) {
-                typeof callback === 'function' && callback();
+            };
+            $.extend(true, defaults, options || {});
+            Swal.fire(defaults).then(function(result) {
+                $.isFunction(callback) && callback();
             });
         },
-        swalSuccess: function(text, callback) {
-            Swal.fire({
+        swalSuccess: function(text, callback, options) {
+            const defaults = {
                 type: 'success',
                 title: '提示',
                 text: text,
                 timer: 2000,
+                confirmButtonText: '确定',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-                showConfirmButton: false
-            }).then(function(result) {
-                if (result.dismiss && result.dismiss === 'timer') {
-                    typeof callback === 'function' && callback();
-                }
+            };
+            $.extend(true, defaults, options || {});
+            Swal.fire(defaults).then(function(result) {
+                $.isFunction(callback) && callback();
             });
         },
-        swalError: function(text, callback) {
-            Swal.fire({
+        swalError: function(text, callback, options) {
+            const defaults = {
                 type: 'error',
                 title: '错误',
                 text: text,
                 confirmButtonText: '确定',
                 allowOutsideClick: false,
                 allowEscapeKey: false
-            }).then(function(result) {
-                typeof callback === 'function' && callback();
+            };
+            $.extend(true, defaults, options || {});
+            Swal.fire(defaults).then(function(result) {
+                $.isFunction(callback) && callback();
             });
         },
-        swalQuestion: function(text, callback) {
-            Swal.fire({
+        swalQuestion: function(text, callback, options) {
+            const defaults = {
                 type: 'question',
                 title: '提示',
                 text: text,
@@ -142,14 +163,16 @@
                 cancelButtonText: '取消',
                 allowOutsideClick: false,
                 allowEscapeKey: false
-            }).then(function(result) {
+            };
+            $.extend(true, defaults, options || {});
+            Swal.fire(defaults).then(function(result) {
                 if (result.value) {
-                    typeof callback === 'function' && callback();
+                    $.isFunction(callback) && callback();
                 }
             });
         },
-        swalPrompt: function(text, callback) {
-            Swal.fire({
+        swalPrompt: function(text, callback, options) {
+            const defaults = {
                 title: text,
                 input: 'text',
                 confirmButtonText: '确定',
@@ -162,18 +185,20 @@
                         return '不能为空';
                     }
                 }
-            }).then(function(result) {
+            };
+            $.extend(true, defaults, options || {});
+            Swal.fire(defaults).then(function(result) {
                 if (result.value) {
-                    typeof callback === 'function' && callback(result);
+                    $.isFunction(callback) && callback(result);
                 }
             });
         },
         // 生成随机字符串
         makeid: function(len) {
-            var text = '';
-            var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let text = '';
+            const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-            for (var i = 0; i < len; i++)
+            for (let i = 0; i < len; i++)
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
             return text;

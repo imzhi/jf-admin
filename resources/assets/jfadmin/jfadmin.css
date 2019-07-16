@@ -1,15 +1,16 @@
-.golden-table thead th {
+.golden-table.table thead th {
+    vertical-align: middle;
     white-space: nowrap;
 }
 
-.golden-table tbody tr td {
+.golden-table.table tbody tr td {
     font-size: 14px;
     vertical-align: middle;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.golden-table tbody tr td.td-break {
+.golden-table.table tbody tr td.td-break {
     /*overflow: inherit;*/
     /*text-overflow: inherit;*/
     white-space: inherit;
@@ -17,7 +18,7 @@
     word-break: break-all;
 }
 
-.golden_captcha {
+.golden-captcha {
     width: 100%;
     height: 100%;
     cursor: pointer;

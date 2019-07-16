@@ -71,15 +71,25 @@
                     </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
+                            <colgroup>
+                                <col width="80px">
+                                <col width="250px">
+                                <col width="250px">
+                                <col width="200px">
+                                <col width="200px">
+                                <col width="120px">
+                                <col width="100px">
+                                <col>
+                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th width="80px">ID</th>
-                                    <th width="150px">用户名</th>
-                                    <th width="220px">所属角色</th>
-                                    <th width="200px">创建时间</th>
-                                    <th width="200px">登录时间</th>
-                                    <th width="120px">登录IP</th>
-                                    <th width="100px">状态</th>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>所属角色</th>
+                                    <th>创建时间</th>
+                                    <th>登录时间</th>
+                                    <th>登录IP</th>
+                                    <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -96,7 +106,11 @@
                                     <td>{{ $item->login_ip }}</td>
                                     <td>{{ $status_rels[$item->status] ?? __('jfadmin.unknow') }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-default status-btn" data-status="{{ 1 - $item->status }}">{{ $status_rels[1 - $item->status] ?? __('jfadmin.unknow') }}</button>
+                                        <button type="button" class="btn btn-default status-btn"
+                                            data-status="{{ 1 - $item->status }}"
+                                            data-url="{{ route('jfadmin::manageuser.status') }}">
+                                            {{ $status_rels[1 - $item->status] ?? __('jfadmin.unknow') }}
+                                        </button>
                                         <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
                                         <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default">分配角色</a>
                                     </td>
@@ -120,35 +134,54 @@
 @section('foot_js')
 @parent
 <script>
-    $('.status-btn').click(function() {
-        var btn = $(this);
-        var text = btn.text().trim();
-        JFA.swalQuestion('确定要' + text + '该账号吗？', function() {
-            var user_id = btn.closest('tr').data('id');
-            var status = btn.data('status');
+    const JFA_PAGE = {
+        ajaxBtn: null,
+        ajaxStart: function() {
+            this.ajaxBtn.prop('disabled', true);
+        },
+        ajaxStop: function() {
+            this.ajaxBtn.prop('disabled', false);
+        },
+        status: function() {
+            const that = this;
 
-            window.form_submit = btn;
-            form_submit.prop('disabled', true);
-            $.ajax({
-                url: '{{ route('jfadmin::manageuser.status') }}',
-                data: {user_id: user_id, status: status},
-                success: function (result) {
-                    if (result.err) {
-                        form_submit.prop('disabled', false);
-                        JFA.swalError(result.msg);
-                        return false;
-                    }
-                    JFA.swalSuccess(result.msg, function() {
-                        if (result.reload) {
-                            location.reload();
-                        }
-                        if (result.redirect) {
-                            location.href = redirect;
+            $('.status-btn').click(function() {
+                const $this = $(this);
+                const text = $this.text().trim();
+
+                JFA.swalQuestion('确定要' + text + '该账号吗？', function() {
+                    that.ajaxBtn = $this;
+
+                    const user_id = $this.closest('tr').data('id');
+                    const status = $this.data('status');
+                    $.ajax({
+                        url: $this.data('url'),
+                        data: {
+                            user_id: user_id,
+                            status: status,
+                        },
+                        success: function (result) {
+                            if (result.err) {
+                                JFA.swalError(result.msg);
+                                return false;
+                            }
+                            JFA.swalSuccess(result.msg, function() {
+                                if (result.reload) {
+                                    location.reload();
+                                }
+                                if (result.redirect) {
+                                    location.href = redirect;
+                                }
+                            });
                         }
                     });
-                }
+                });
             });
-        });
-    });
+        },
+        init: function() {
+            this.status();
+        }
+    };
+    JFA_PAGE.init();
 </script>
 @endsection

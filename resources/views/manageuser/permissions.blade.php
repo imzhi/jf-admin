@@ -36,20 +36,28 @@
                 <div class="ibox-content clearfix">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="javascript:" class="btn btn-default" id="detect-btn">检测</a>
-                            <a href="javascript:" class="btn btn-default" id="group-btn">分组</a>
+                            <a href="javascript:" class="btn btn-default" id="detect-btn" data-url="{{ route('jfadmin::manageuser.permissions.detect') }}">检测</a>
+                            <a href="javascript:" class="btn btn-default" id="group-btn" data-url="{{ route('jfadmin::manageuser.permissions.group') }}">分组</a>
                         </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
+                            <colgroup>
+                                <col width="40px">
+                                <col width="80px">
+                                <col width="200px">
+                                <col width="350px">
+                                <col>
+                                <col width="200px">
+                            </colgroup>
                             <thead>
                                 <tr>
-                                    <th width="40px"><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
-                                    <th width="80px">ID</th>
-                                    <th width="200px">分组</th>
-                                    <th width="350px">权限</th>
+                                    <th><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
+                                    <th>ID</th>
+                                    <th>分组</th>
+                                    <th>权限</th>
                                     <th>路由</th>
-                                    <th width="200px">创建时间</th>
+                                    <th>创建时间</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,101 +89,83 @@
 @section('foot_js')
 @parent
 <script>
-    // 检测
-    $('#detect-btn').click(function() {
-        window.form_submit = $('#detect-btn');
-        form_submit.prop('disabled', true);
-        $.ajax({
-            url: '{{ route('jfadmin::manageuser.permissions.detect') }}',
-            success: function (result) {
-                if (result.err) {
-                    form_submit.prop('disabled', false);
-                    JFA.swalError(result.msg);
-                    return false;
-                }
-                JFA.swalSuccess(result.msg, function() {
-                    if (result.reload) {
-                        location.reload();
-                    }
-                    if (result.redirect) {
-                        location.href = '{!! url()->previous() !!}';
+    const JFA_PAGE = {
+        ajaxBtn: null,
+        ajaxStart: function() {
+            this.ajaxBtn.prop('disabled', true);
+        },
+        ajaxStop: function() {
+            this.ajaxBtn.prop('disabled', false);
+        },
+        // 检测
+        detect: function() {
+            const that = this;
+
+            $('#detect-btn').click(function() {
+                that.ajaxBtn = $(this);
+
+                $.ajax({
+                    url: $(this).data('url'),
+                    success: function (result) {
+                        if (result.err) {
+                            JFA.swalError(result.msg);
+                            return false;
+                        }
+                        JFA.swalSuccess(result.msg, function() {
+                            if (result.reload) {
+                                location.reload();
+                            }
+                            if (result.redirect) {
+                                location.href = '{!! url()->previous() !!}';
+                            }
+                        }, {timer: 4000});
                     }
                 });
-            }
-        });
-    });
+            });
+        },
+        // 分组
+        group: function() {
+            const that = this;
 
-    // 分组
-    $('#group-btn').click(function() {
-        var ajax_data = $('.id_class').serializeArray();
-        if (!ajax_data.length) {
-            JFA.swalError('未勾选要分组的权限');
-            return false;
-        }
+            $('#group-btn').click(function() {
+                const $this = $(this);
+                const ajax_data = $('.id_class').serializeArray();
 
-        JFA.swalPrompt('分组名称', function(swalResult) {
-            window.form_submit = $('#group-btn');
-            form_submit.prop('disabled', true);
-            ajax_data.push({name: 'name', value: swalResult.value});
-            $.ajax({
-                url: '{{ route('jfadmin::manageuser.permissions.group') }}',
-                data: ajax_data,
-                success: function (result) {
-                    if (result.err) {
-                        form_submit.prop('disabled', false);
-                        JFA.swalError(result.msg);
-                        return false;
-                    }
-                    JFA.swalSuccess(result.msg, function() {
-                        if (result.reload) {
-                            location.reload();
-                        }
-                        if (result.redirect) {
-                            location.href = '{!! url()->previous() !!}';
+                if (!ajax_data.length) {
+                    JFA.swalError('未勾选要分组的权限');
+                    return false;
+                }
+
+                JFA.swalPrompt('分组名称', function(swalResult) {
+                    that.ajaxBtn = $this;
+                    ajax_data.push({name: 'name', value: swalResult.value});
+
+                    $.ajax({
+                        url: $this.data('url'),
+                        data: ajax_data,
+                        success: function (result) {
+                            if (result.err) {
+                                JFA.swalError(result.msg);
+                                return false;
+                            }
+                            JFA.swalSuccess(result.msg, function() {
+                                if (result.reload) {
+                                    location.reload();
+                                }
+                                if (result.redirect) {
+                                    location.href = '{!! url()->previous() !!}';
+                                }
+                            });
                         }
                     });
-                }
+                })
             });
-        })
-        // Swal.fire({
-        //     title: '分组名称',
-        //     input: 'text',
-        //     confirmButtonText: '确定',
-        //     showCancelButton: true,
-        //     cancelButtonText: '取消',
-        //     allowOutsideClick: false,
-        //     allowEscapeKey: false,
-        //     inputValidator: function(value) {
-        //         if (!value) {
-        //             return '分组名称必填';
-        //         }
-        //     }
-        // }).then(function(swalResult) {
-        //     if (swalResult.value) {
-        //         window.form_submit = $('#group-btn');
-        //         form_submit.prop('disabled', true);
-        //         ajax_data.push({name: 'name', value: swalResult.value});
-        //         $.ajax({
-        //             url: '{{ route('jfadmin::manageuser.permissions.group') }}',
-        //             data: ajax_data,
-        //             success: function (result) {
-        //                 if (result.err) {
-        //                     form_submit.prop('disabled', false);
-        //                     JFA.swalError(result.msg);
-        //                     return false;
-        //                 }
-        //                 JFA.swalSuccess(result.msg, function() {
-        //                     if (result.reload) {
-        //                         location.reload();
-        //                     }
-        //                     if (result.redirect) {
-        //                         location.href = '{!! url()->previous() !!}';
-        //                     }
-        //                 });
-        //             }
-        //         });
-        //     }
-        // });
-    });
+        },
+        init: function() {
+            this.detect();
+            this.group();
+        }
+    };
+    JFA_PAGE.init();
 </script>
 @endsection
