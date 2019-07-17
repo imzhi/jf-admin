@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
         AdminUser::truncate();
         $user = AdminUser::create([
             'name' => 'admin',
+            'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
         ]);
 

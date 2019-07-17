@@ -51,6 +51,14 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">邮箱</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="email" class="form-control" value="{{ $request_data['email'] ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label">所属角色</label>
                                     <div class="col-md-8">
                                         <select class="form-control" name="role" style="padding: 0 12px;">
@@ -73,10 +81,11 @@
                         <table class="table table-bordered table-hover golden-table">
                             <colgroup>
                                 <col width="80px">
+                                <col width="200px">
                                 <col width="250px">
                                 <col width="250px">
-                                <col width="200px">
-                                <col width="200px">
+                                <col width="180px">
+                                <col width="180px">
                                 <col width="120px">
                                 <col width="100px">
                                 <col>
@@ -85,6 +94,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>用户名</th>
+                                    <th>邮箱</th>
                                     <th>所属角色</th>
                                     <th>创建时间</th>
                                     <th>登录时间</th>
@@ -98,6 +108,7 @@
                                 <tr data-id="{{ $item->id }}">
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
                                     <td>
                                         {{ $item->getRoleNames()->implode(', ') }}
                                     </td>

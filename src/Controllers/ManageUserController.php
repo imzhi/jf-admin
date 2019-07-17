@@ -75,6 +75,7 @@ class ManageUserController extends Controller
 
         $id = $this->request->input('id');
         $name = $this->request->input('name');
+        $email = $this->request->input('email');
         $request_data = $this->request->except('id');
 
         if ($id) {
@@ -83,7 +84,11 @@ class ManageUserController extends Controller
             }
 
             if ($this->manageUserRepository->checkSame($name, 'name', $id)) {
-                return ['err' => true, 'msg' => '用户账号已存在'];
+                return ['err' => true, 'msg' => '用户名已存在'];
+            }
+
+            if ($this->manageUserRepository->checkSame($email, 'email', $id)) {
+                return ['err' => true, 'msg' => '邮箱已存在'];
             }
 
             $result = $this->manageUserRepository->edit($request_data, $id);
@@ -93,7 +98,11 @@ class ManageUserController extends Controller
             return ['err' => false, 'msg' => '编辑成员成功', 'redirect' => true];
         } else {
             if ($this->manageUserRepository->checkSame($name, 'name')) {
-                return ['err' => true, 'msg' => '用户账号已存在'];
+                return ['err' => true, 'msg' => '用户名已存在'];
+            }
+
+            if ($this->manageUserRepository->checkSame($email, 'email')) {
+                return ['err' => true, 'msg' => '邮箱已存在'];
             }
 
             $result = $this->manageUserRepository->create($request_data);

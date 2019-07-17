@@ -22,6 +22,11 @@ class ManageUserRepository
                 $query->where('name', 'like', "%{$account}%");
             }
 
+            $email = $args['email'] ?? '';
+            if ($email) {
+                $query->where('email', 'like', "%{$email}%");
+            }
+
             $role = $args['role'] ?? '';
             if (is_numeric($role)) {
                 $query->whereHas('roles', function ($hasQuery) use ($role) {
@@ -61,22 +66,26 @@ class ManageUserRepository
     public function create(array $args)
     {
         $model = new AdminUser;
-        $model->name = $args['name'] ?? '';
-        $model->password = bcrypt($args['password'] ?? '');
+        $model->name = $args['name'];
+        $model->email = $args['email'];
+        $model->password = bcrypt($args['password']);
 
         $result = $model->save();
         return $result;
-
     }
 
     public function edit(array $args, $id)
     {
         $name = $args['name'] ?? '';
+        $email = $args['email'] ?? '';
         $password = $args['password'] ?? '';
 
         $model = $this->get($id);
         if ($name) {
             $model->name = $name;
+        }
+        if ($email) {
+            $model->email = $email;
         }
         if ($password) {
             $model->password = bcrypt($password);
@@ -141,7 +150,6 @@ class ManageUserRepository
         $result = $model->save();
 
         return $result;
-
     }
 
     public function rolesEdit(array $args, $id)

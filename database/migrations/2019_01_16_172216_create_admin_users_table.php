@@ -18,7 +18,6 @@ CREATE TABLE `admin_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `mobile` varchar(20) DEFAULT NULL,
   `password` varchar(100) NOT NULL,
   `login_time` timestamp NULL DEFAULT NULL,
   `login_ip` varchar(45) DEFAULT NULL,

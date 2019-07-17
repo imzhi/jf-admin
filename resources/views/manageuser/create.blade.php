@@ -49,6 +49,10 @@
                                     <input type="text" class="form-control" name="name" {{ $data ? 'disabled' : '' }} value="{{ $data->name ?? '' }}" maxlength="20">
                                 </div>
                                 <div class="form-group">
+                                    <label>邮箱</label>
+                                    <input type="text" class="form-control" name="email" value="{{ $data->email ?? '' }}">
+                                </div>
+                                <div class="form-group">
                                     <label>密码</label>
                                     <input type="password" class="form-control" name="password" placeholder="{{ $data ? '留空则不修改' : '' }}">
                                     <span class="form-text m-b-none">不能少于 6 个字符</span>

@@ -34,6 +34,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <form id="mform" data-url="{{ route('jfadmin::profile.pwd') }}">
+                                <h3 class="m-t-none m-b">用户资料</h3>
+                                <div class="form-group">
+                                    <label>用户名</label>
+                                    <input type="text" class="form-control" name="name" value="{{ $admin_user->name }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>邮箱</label>
+                                    <input type="text" class="form-control" name="email" value="{{ $admin_user->email }}" disabled>
+                                </div>
                                 <div class="form-group">
                                     <label>密码</label>
                                     <input type="password" class="form-control" name="password">
