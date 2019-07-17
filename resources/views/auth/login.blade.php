@@ -14,11 +14,11 @@
     <link href="{{ asset('vendor/jfadmin/inspinia/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/jfadmin/jfadmin/jfadmin.css') }}" rel="stylesheet">
 </head>
-<body class="gray-bg" style="@if(config('jfadmin.wallpaper')) background-image: url({{ config('jfadmin.wallpaper') }}); background-size: cover; @endif">
+<body class="gray-bg" style="@if(config('jfadmin.wallpaper')) background-image: url({{ filter_var(config('jfadmin.wallpaper'), FILTER_VALIDATE_URL) ? config('jfadmin.wallpaper') : asset(config('jfadmin.wallpaper')) }}); background-size: cover; @endif">
     <div class="loginColumns animated fadeInDown">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h2 class="font-bold text-center @if(config('jfadmin.wallpaper')) text-white @endif">{{ config('jfadmin.title') }}</h2>
+                <h2 class="font-bold text-center {{ config('jfadmin.wallpaper_class') }}">{{ config('jfadmin.title') }}</h2>
                 <div class="ibox-content">
                     <form id="mform" data-url="{{ route('jfadmin::login') }}">
                         <div class="form-group">
@@ -36,6 +36,9 @@
                                     <img src="{{ captcha_src() }}" class="golden-captcha" data-toggle="tooltip" data-placement="top" title="点击刷新" onclick="$(this).prop('src', $(this).prop('src').split('?')[0] + '?' + Math.random())">
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="m-b-none"><input type="checkbox" name="remember" class="i-checks"> 记住我</label>
                         </div>
                         <button type="submit" class="btn btn-primary block full-width m-b" id="submit-btn">登录</button>
                     </form>

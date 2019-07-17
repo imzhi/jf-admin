@@ -65,7 +65,7 @@ class AuthController extends Controller
         $this->validate($request, [
             $this->username() => 'required',
             'password' => 'required',
-            // 'captcha' => 'required|captcha',
+            'captcha' => 'required|captcha',
         ], [
             $this->username() . '.required' => '用户名必填',
             'password.required' => '密码必填',
