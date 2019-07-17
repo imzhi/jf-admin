@@ -1,16 +1,27 @@
 <?php
 
 return [
+    // 站点标题
     'title' => 'jf-admin',
+    // 站点标题缩写
     'caption' => 'JFA+',
+    // 欢迎语句
     'welcome' => '欢迎来到 jf-admin 后台管理系统',
+    // 登录页背景图
+    'wallpaper' => 'https://i.loli.net/2019/07/17/5d2e7e7ccc59b26675.jpg',
+    // 登录页标题文字 class
+    'wallpaper_class' => 'text-white',
 
+    // 安装目录
     'directory' => app_path('JFAdmin'),
 
+    // 列表每页条目数量
     'page_num' => 20,
 
+    // 超级管理员角色名称（支持数组）
     'super_role' => 'Super Admin',
 
+    // 管理员用户配置
     'auth' => [
         'guards' => [
             'admin_user' => [
@@ -27,6 +38,7 @@ return [
         ],
     ],
 
+    // 路由配置
     'route' => [
         'prefix' => 'jfadmin',
         'namespace' => 'App\\JFAdmin\\Controllers',
