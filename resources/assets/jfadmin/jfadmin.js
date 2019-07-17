@@ -27,15 +27,15 @@
         });
 
         $(document).ajaxStart(function(event, jqxhr, settings) {
-            $.isFunction(JFA_PAGE.ajaxStart) && JFA_PAGE.ajaxStart();
+            checkFunc('ajaxStart') && JFA_PAGE.ajaxStart();
         });
 
         $(document).ajaxStop(function(event, jqxhr, settings) {
-            $.isFunction(JFA_PAGE.ajaxStop) && JFA_PAGE.ajaxStop();
+            checkFunc('ajaxStop') && JFA_PAGE.ajaxStop();
         });
 
         $(document).ajaxError(function(event, jqxhr, settings) {
-            $.isFunction(JFA_PAGE.ajaxError) && JFA_PAGE.ajaxError();
+            checkFunc('ajaxError') && JFA_PAGE.ajaxError();
         });
     };
 
@@ -77,6 +77,10 @@
 
     const tooltip = function() {
         $('[data-toggle=tooltip]').tooltip();
+    };
+
+    const checkFunc = function(name) {
+        return typeof JFA_PAGE !== 'undefined' && $.isFunction(JFA_PAGE[name]);
     };
 
     const JFA = {
