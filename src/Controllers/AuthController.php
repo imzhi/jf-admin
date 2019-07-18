@@ -2,6 +2,7 @@
 
 namespace Imzhi\JFAdmin\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
@@ -93,6 +94,10 @@ class AuthController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        $user->login_time = Carbon::now();
+        $user->login_ip = $request->ip();
+        $user->save();
+
         $redirect = $request->session()->pull('url.intended', route('jfadmin::show.index'));
         return [
             'err' => false,
