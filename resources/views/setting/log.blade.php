@@ -123,9 +123,22 @@
                 <h4 class="modal-title">操作日志详情</h4>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label>字段修改</label>
-                    <pre class="form-control modal-changes" style="white-space: pre-wrap;">无</pre>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover golden-table">
+                        <colgroup>
+                            <col width="20%">
+                            <col width="40%">
+                            <col width="40%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>字段名</th>
+                                <th>新值</th>
+                                <th>旧值</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -136,30 +149,44 @@
 @section('foot_js')
 @parent
 <script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/diff_match_patch/javascript/diff_match_patch.js') }}"></script>
-<script src="{{ asset('vendor/jfadmin/inspinia/js/plugins/preetyTextDiff/jquery.pretty-text-diff.min.js') }}"></script>
 <script>
     const JFA_PAGE = {
         // 操作日志详情
         detail: function() {
-            $('#log-detail-modal').on('show.bs.modal', function (evt) {
-                var btn = $(evt.relatedTarget);
-                var modal = $(this);
-                var modal_body = modal.find('.modal-body');
-                var tr = btn.closest('tr');
+            const that = this;
 
-                var changes = tr.data('changes');
-                var original_con = changes.old && Object.keys(changes.old).length ? changes.old : {};
-                var changed_con = changes.attributes && Object.keys(changes.attributes).length ? changes.attributes : {};
-                $('.modal-body').prettyTextDiff({
-                    originalContent: JSON.stringify(original_con, null, 2),
-                    changedContent: JSON.stringify(changed_con, null, 2),
-                    diffContainer: '.modal-changes',
+            $('#log-detail-modal').on('show.bs.modal', function (evt) {
+                const modal_body = $(this).find('.modal-body');
+                const tr = $(evt.relatedTarget).closest('tr');
+                const changes = tr.data('changes');
+                const attributes = changes.attributes;
+                const old = changes.old;
+
+                let html = '';
+                let i = 0;
+                $.each(attributes, function(key, val) {
+                    html += '<tr>';
+                    html += '<td>' + key + '</td>';
+                    html += '<td class="td-break">' + that.wrapNull(val) + '</td>';
+                    if (!old) {
+                        if (!i) {
+                            html += '<td class="td-break text-center" rowspan="' + Object.keys(attributes).length + '">暂无数据</td>';
+                        }
+                    } else {
+                        html += '<td class="td-break">' + that.wrapNull(old[key]) + '</td>';
+                    }
+                    html += '</tr>';
+                    i++;
                 });
+                modal_body.find('.table tbody').html(html ? html : '<tr><td class="td-break text-center" colspan="1000">暂无数据</td></tr>');
             });
+        },
+        wrapNull: function(val) {
+            return val === null ? '<span class="badge">' + val + '</span>' : val;
         },
         init: function() {
             $('[name=daterange]').daterangepicker(JFA.daterangepicker_conf);
+            this.detail();
         }
     };
     JFA_PAGE.init();
