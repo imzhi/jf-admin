@@ -53,6 +53,13 @@ class ManageUserRepository
             ->orderBy('id')
             ->paginate(config('jfadmin.page_num'));
 
+        $status_rels = AdminUser::statusRels();
+        $list->transform(function ($item) use ($status_rels) {
+            $item->status_text = $status_rels[$item->status];
+            $item->status_text_r = $status_rels[$this->statusReverse($item->status)];
+            return $item;
+        });
+
         return $list;
     }
 
@@ -113,17 +120,18 @@ class ManageUserRepository
         return $modifyId == 1 && $currentId != 1;
     }
 
-    public function ifDisableAdmin($status, $userId)
+    public function ifDisableAdmin($userId)
     {
-        return $status == AdminUser::STATUS_DISABLE && $userId == 1;
+        $model = $this->get($userId);
+
+        return $userId == 1 && $model->status === AdminUser::STATUS_ENABLE;
     }
 
-    public function status($status, $userId)
+    public function status($userId)
     {
-        $status = $status === AdminUser::STATUS_ENABLE
-            ? AdminUser::STATUS_ENABLE
-            : AdminUser::STATUS_DISABLE;
-        $result = AdminUser::where('id', $userId)->update(['status' => $status]);
+        $model = $this->get($userId);
+        $model->status = $this->statusReverse($model->status);
+        $result = $model->save();
 
         return $result;
     }
@@ -361,5 +369,10 @@ class ManageUserRepository
         $this->getRole($id)->syncPermissions($permissionIds);
 
         return true;
+    }
+
+    protected function statusReverse($status)
+    {
+        return $status === AdminUser::STATUS_ENABLE ? AdminUser::STATUS_DISABLE : AdminUser::STATUS_ENABLE;
     }
 }

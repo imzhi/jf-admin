@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Imzhi\JFAdmin\Models\AdminUser;
 use Imzhi\JFAdmin\Requests\ManageUserCreate;
-use Imzhi\JFAdmin\Requests\ManageUserStatus;
 use Imzhi\JFAdmin\Requests\ManageUserDistribute;
 use Imzhi\JFAdmin\Requests\ManageUserRolesCreate;
 use Imzhi\JFAdmin\Repositories\ManageUserRepository;
@@ -121,27 +120,26 @@ class ManageUserController extends Controller
     /**
      * 管理员管理-成员状态操作
      */
-    protected function status(ManageUserStatus $request)
+    protected function status()
     {
         $user = Auth::guard('admin_user')->user();
 
-        $user_id = $this->request->input('user_id');
-        $status = $this->request->input('status');
+        $id = $this->request->input('id');
 
-        $data = $this->manageUserRepository->get($user_id);
+        $data = $this->manageUserRepository->get($id);
         if (!$data) {
             return ['err' => true, 'msg' => '参数错误'];
         }
 
-        if ($this->manageUserRepository->ifNotAdmin($user_id, $user->id)) {
+        if ($this->manageUserRepository->ifNotAdmin($id, $user->id)) {
             return ['err' => true, 'msg' => '无权限修改初始管理员账号'];
         }
 
-        if ($this->manageUserRepository->ifDisableAdmin($status, $user_id)) {
+        if ($this->manageUserRepository->ifDisableAdmin($id)) {
             return ['err' => true, 'msg' => '不能禁用初始管理员账号'];
         }
 
-        $result = $this->manageUserRepository->status($status, $user_id);
+        $result = $this->manageUserRepository->status($id);
         if (!$result) {
             return ['err' => true, 'msg' => '操作失败，请重试'];
         }

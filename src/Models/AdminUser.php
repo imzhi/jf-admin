@@ -34,15 +34,15 @@ class AdminUser extends Authenticatable
         'login_time', 'deleted_at',
     ];
 
-    // 状态，0-禁用，1-启用
-    const STATUS_DISABLE = 0;
+    // 状态，1-启用，2-禁用
     const STATUS_ENABLE = 1;
+    const STATUS_DISABLE = 2;
 
     public static function statusRels()
     {
         return [
-            static::STATUS_DISABLE => '禁用',
             static::STATUS_ENABLE => '启用',
+            static::STATUS_DISABLE => '禁用',
         ];
     }
 

@@ -115,13 +115,9 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->login_time }}</td>
                                     <td>{{ $item->login_ip }}</td>
-                                    <td>{{ $status_rels[$item->status] ?? __('jfadmin.unknow') }}</td>
+                                    <td>{{ $item->status_text }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-default status-btn"
-                                            data-status="{{ 1 - $item->status }}"
-                                            data-url="{{ route('jfadmin::manageuser.status') }}">
-                                            {{ $status_rels[1 - $item->status] ?? __('jfadmin.unknow') }}
-                                        </button>
+                                        <button type="button" class="btn btn-default status-btn" data-url="{{ route('jfadmin::manageuser.status') }}">{{ $item->status_text_r }}</button>
                                         <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
                                         <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default">分配角色</a>
                                     </td>
@@ -163,14 +159,10 @@
                 JFA.swalQuestion('确定要' + text + '该账号吗？', function() {
                     that.ajaxBtn = $this;
 
-                    const user_id = $this.closest('tr').data('id');
-                    const status = $this.data('status');
+                    const id = $this.closest('tr').data('id');
                     $.ajax({
                         url: $this.data('url'),
-                        data: {
-                            user_id: user_id,
-                            status: status,
-                        },
+                        data: {id: id},
                         success: function (result) {
                             if (result.err) {
                                 JFA.swalError(result.msg);

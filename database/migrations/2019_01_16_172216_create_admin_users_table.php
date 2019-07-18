@@ -22,7 +22,7 @@ CREATE TABLE `admin_users` (
   `login_time` timestamp NULL DEFAULT NULL,
   `login_ip` varchar(45) DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态，0-禁用，1-启用',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态，1-启用，2-禁用',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
