@@ -38,7 +38,7 @@ return [
         ],
     ],
 
-    // 管理员权限表配置
+    // 管理员权限模型类配置
     'permission' => [
         'models' => [
             'permission' => Imzhi\JFAdmin\Models\Permission::class,
