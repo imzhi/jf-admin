@@ -26,7 +26,7 @@
                             <img alt="image" class="rounded-circle" src="{{ asset('vendor/jfadmin/inspinia/img/profile_small.jpg') }}"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold">{{ $admin_user->name }}</span>
-                                <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                                <span class="text-muted text-xs block">{{ $admin_user->getRoleNames()->implode(', ') }} <b class="caret"></b></span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="{{ route('jfadmin::show.profile.pwd') }}">修改密码</a></li>
@@ -86,7 +86,7 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">{{ config('jfadmin::welcome') }}</span>
+                            <span class="m-r-sm text-muted welcome-message">{{ config('jfadmin.welcome') }}</span>
                         </li>
                         <li>
                             <a href="{{ route('jfadmin::logout') }}">

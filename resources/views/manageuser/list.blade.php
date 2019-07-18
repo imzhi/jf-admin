@@ -109,8 +109,8 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>
-                                        {{ $item->getRoleNames()->implode(', ') }}
+                                    <td class="td-break">
+                                        <div style="width: 250px;">{{ $item->getRoleNames()->implode(', ') }}</div>
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->login_time }}</td>

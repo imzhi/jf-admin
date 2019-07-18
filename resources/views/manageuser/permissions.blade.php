@@ -46,8 +46,8 @@
                                 <col width="40px">
                                 <col width="80px">
                                 <col width="200px">
-                                <col width="350px">
                                 <col>
+                                <col width="380px">
                                 <col width="200px">
                             </colgroup>
                             <thead>
@@ -67,7 +67,9 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->permissionExtra->extra_cate }}</td>
                                     <td>{{ $item->permissionExtra->extra_name }}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td class="td-break">
+                                        <div style="width: 380px;">{{ $item->name }}</div>
+                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                 </tr>
                                 @empty

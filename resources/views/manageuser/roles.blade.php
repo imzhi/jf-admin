@@ -43,7 +43,7 @@
                         <table class="table table-bordered table-hover golden-table">
                             <colgroup>
                                 <col width="80px">
-                                <col width="250px">
+                                <col width="300px">
                                 <col width="200px">
                                 <col>
                             </colgroup>
@@ -59,7 +59,9 @@
                                 @forelse($list as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td class="td-break">
+                                        <div style="width: 300px;">{{ $item->name }}</div>
+                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a href="{{ route('jfadmin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-default">编辑</a>
