@@ -64,8 +64,11 @@
                                     </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>
-                                        <a href="{{ route('jfadmin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-default">编辑</a>
-                                        <a href="{{ route('jfadmin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-default">分配权限</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.roles.create', [$item->id]) }}" class="btn btn-default {{ $item->is_super ? 'disabled' : '' }}">编辑</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.roles.distribute', [$item->id]) }}" class="btn btn-default {{ $item->is_super ? 'disabled' : '' }}">分配权限</a>
+                                        @if($item->is_super)
+                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="禁止编辑超级管理员角色"></i>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

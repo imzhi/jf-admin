@@ -132,7 +132,18 @@ class ManageUserRepository
     {
         $list = Role::orderBy('id')->paginate(config('jfadmin.page_num'));
 
+        $list->transform(function ($item) {
+            $item->is_super = $this->ifSuperRole($item);
+
+            return $item;
+        });
+
         return $list;
+    }
+
+    public function ifSuperRole($role)
+    {
+        return in_array($role->name, (array) config('jfadmin.super_role'));
     }
 
     public function getRole($id)

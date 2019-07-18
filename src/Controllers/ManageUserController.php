@@ -79,6 +79,11 @@ class ManageUserController extends Controller
         $request_data = $this->request->except('id');
 
         if ($id) {
+            $data = $this->manageUserRepository->get($id);
+            if (!$data) {
+                return ['err' => true, 'msg' => '参数错误'];
+            }
+
             if ($this->manageUserRepository->ifNotAdmin($id, $user->id)) {
                 return ['err' => true, 'msg' => '无权限修改初始管理员账号'];
             }
@@ -123,6 +128,11 @@ class ManageUserController extends Controller
         $user_id = $this->request->input('user_id');
         $status = $this->request->input('status');
 
+        $data = $this->manageUserRepository->get($user_id);
+        if (!$data) {
+            return ['err' => true, 'msg' => '参数错误'];
+        }
+
         if ($this->manageUserRepository->ifNotAdmin($user_id, $user->id)) {
             return ['err' => true, 'msg' => '无权限修改初始管理员账号'];
         }
@@ -165,6 +175,10 @@ class ManageUserController extends Controller
             if (!$data) {
                 return redirect(url()->previous())->withErrors('参数错误');
             }
+
+            if ($this->manageUserRepository->ifSuperRole($data)) {
+                return redirect(url()->previous())->withErrors('禁止编辑超级管理员角色');
+            }
         }
 
         $nav_id = 'manageuser.roles';
@@ -181,6 +195,15 @@ class ManageUserController extends Controller
         $request_data = $this->request->except('id');
 
         if ($id) {
+            $data = $this->manageUserRepository->getRole($id);
+            if (!$data) {
+                return ['err' => true, 'msg' => '参数错误'];
+            }
+
+            if ($this->manageUserRepository->ifSuperRole($data)) {
+                return ['err' => true, 'msg' => '禁止编辑超级管理员角色'];
+            }
+
             if ($this->manageUserRepository->checkSameRole($name, $id)) {
                 return ['err' => true, 'msg' => '角色名称已存在'];
             }
@@ -228,6 +251,11 @@ class ManageUserController extends Controller
         $id = $this->request->input('id');
         $role_ids = $this->request->input('role_ids', []);
 
+        $data = $this->manageUserRepository->get($id);
+        if (!$data) {
+            return ['err' => true, 'msg' => '参数错误'];
+        }
+
         $result = $this->manageUserRepository->distribute($role_ids, $id);
         if (!$result) {
             return ['err' => true, 'msg' => '操作失败'];
@@ -259,6 +287,11 @@ class ManageUserController extends Controller
     {
         $id = $this->request->input('id');
         $permission_ids = $this->request->input('permission_ids', []);
+
+        $data = $this->manageUserRepository->getRole($id);
+        if (!$data) {
+            return ['err' => true, 'msg' => '参数错误'];
+        }
 
         $result = $this->manageUserRepository->rolesDistribute($permission_ids, $id);
         if (!$result) {
