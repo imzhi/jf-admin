@@ -37,9 +37,9 @@ class ProfileController extends Controller
 
         $result = $this->adminUserRepository->pwd($password, $admin_user->id);
         if (!$result) {
-            return ['err' => true, 'msg' => '修改密码失败'];
+            return response()->fai(['msg' => '修改密码失败']);
         }
 
-        return ['err' => false, 'msg' => '修改密码成功', 'reload' => true];
+        return response()->suc(['msg' => '修改密码成功', 'reload' => true]);
     }
 }

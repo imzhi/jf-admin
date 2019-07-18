@@ -245,10 +245,7 @@ class ManageUserRepository
                         'line' => $e->getLine(),
                         'action_name' => $action_name,
                     ]);
-                    return [
-                        'err' => true,
-                        'msg' => "检测出错。控制器方法 {$action_name} 缺少注释。",
-                    ];
+                    return response()->fai(['msg' => "检测出错。控制器方法 {$action_name} 缺少注释。"]);
                 }
                 $routes_data[$route_name] = $comment;
             }
@@ -295,11 +292,10 @@ class ManageUserRepository
         $count_add = count($routes_add);
         $count_del = count($routes_del);
         $count_mod = count($routes_mod);
-        return [
-            'err' => false,
+        return response()->suc([
             'msg' => "操作成功。新增 {$count_add} 条。更新 {$count_mod} 条。删除 {$count_del} 条。",
             'reload' => true,
-        ];
+        ]);
     }
 
     public function permissionsGroup(array $args)

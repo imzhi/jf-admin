@@ -80,40 +80,40 @@ class ManageUserController extends Controller
         if ($id) {
             $data = $this->manageUserRepository->get($id);
             if (!$data) {
-                return ['err' => true, 'msg' => '参数错误'];
+                return response()->fai(['msg' => '参数错误']);
             }
 
             if ($this->manageUserRepository->ifNotAdmin($id, $user->id)) {
-                return ['err' => true, 'msg' => '无权限修改初始管理员账号'];
+                return response()->fai(['msg' => '无权限修改初始管理员账号']);
             }
 
             if ($this->manageUserRepository->checkSame($name, 'name', $id)) {
-                return ['err' => true, 'msg' => '用户名已存在'];
+                return response()->fai(['msg' => '用户名已存在']);
             }
 
             if ($this->manageUserRepository->checkSame($email, 'email', $id)) {
-                return ['err' => true, 'msg' => '邮箱已存在'];
+                return response()->fai(['msg' => '邮箱已存在']);
             }
 
             $result = $this->manageUserRepository->edit($request_data, $id);
             if (!$result) {
-                return ['err' => true, 'msg' => '编辑成员失败'];
+                return response()->fai(['msg' => '编辑成员失败']);
             }
-            return ['err' => false, 'msg' => '编辑成员成功', 'redirect' => true];
+            return response()->suc(['msg' => '编辑成员成功', 'redirect' => true]);
         } else {
             if ($this->manageUserRepository->checkSame($name, 'name')) {
-                return ['err' => true, 'msg' => '用户名已存在'];
+                return response()->fai(['msg' => '用户名已存在']);
             }
 
             if ($this->manageUserRepository->checkSame($email, 'email')) {
-                return ['err' => true, 'msg' => '邮箱已存在'];
+                return response()->fai(['msg' => '邮箱已存在']);
             }
 
             $result = $this->manageUserRepository->create($request_data);
             if (!$result) {
-                return ['err' => true, 'msg' => '新增成员失败'];
+                return response()->fai(['msg' => '新增成员失败']);
             }
-            return ['err' => false, 'msg' => '新增成员成功', 'redirect' => true];
+            return response()->suc(['msg' => '新增成员成功', 'redirect' => true]);
         }
     }
 
@@ -128,23 +128,23 @@ class ManageUserController extends Controller
 
         $data = $this->manageUserRepository->get($id);
         if (!$data) {
-            return ['err' => true, 'msg' => '参数错误'];
+            return response()->fai(['msg' => '参数错误']);
         }
 
         if ($this->manageUserRepository->ifNotAdmin($id, $user->id)) {
-            return ['err' => true, 'msg' => '无权限修改初始管理员账号'];
+            return response()->fai(['msg' => '无权限修改初始管理员账号']);
         }
 
         if ($this->manageUserRepository->ifDisableAdmin($id)) {
-            return ['err' => true, 'msg' => '不能禁用初始管理员账号'];
+            return response()->fai(['msg' => '不能禁用初始管理员账号']);
         }
 
         $result = $this->manageUserRepository->status($id);
         if (!$result) {
-            return ['err' => true, 'msg' => '操作失败，请重试'];
+            return response()->fai(['msg' => '操作失败，请重试']);
         }
 
-        return ['err' => false, 'msg' => '操作成功', 'reload' => true];
+        return response()->suc(['msg' => '操作成功', 'reload' => true]);
     }
 
     /**
@@ -195,32 +195,32 @@ class ManageUserController extends Controller
         if ($id) {
             $data = $this->manageUserRepository->getRole($id);
             if (!$data) {
-                return ['err' => true, 'msg' => '参数错误'];
+                return response()->fai(['msg' => '参数错误']);
             }
 
             if ($this->manageUserRepository->ifSuperRole($data)) {
-                return ['err' => true, 'msg' => '禁止编辑超级管理员角色'];
+                return response()->fai(['msg' => '禁止编辑超级管理员角色']);
             }
 
             if ($this->manageUserRepository->checkSameRole($name, $id)) {
-                return ['err' => true, 'msg' => '角色名称已存在'];
+                return response()->fai(['msg' => '角色名称已存在']);
             }
 
             $result = $this->manageUserRepository->rolesEdit($request_data, $id);
             if (!$result) {
-                return ['err' => true, 'msg' => '编辑角色失败'];
+                return response()->fai(['msg' => '编辑角色失败']);
             }
-            return ['err' => false, 'msg' => '编辑角色成功', 'redirect' => true];
+            return response()->suc(['msg' => '编辑角色成功', 'redirect' => true]);
         } else {
             if ($this->manageUserRepository->checkSameRole($name)) {
-                return ['err' => true, 'msg' => '角色名称已存在'];
+                return response()->fai(['msg' => '角色名称已存在']);
             }
 
             $result = $this->manageUserRepository->rolesCreate($request_data);
             if (!$result) {
-                return ['err' => true, 'msg' => '新增角色失败'];
+                return response()->fai(['msg' => '新增角色失败']);
             }
-            return ['err' => false, 'msg' => '新增角色成功', 'redirect' => true];
+            return response()->suc(['msg' => '新增角色成功', 'redirect' => true]);
         }
     }
 
@@ -251,14 +251,14 @@ class ManageUserController extends Controller
 
         $data = $this->manageUserRepository->get($id);
         if (!$data) {
-            return ['err' => true, 'msg' => '参数错误'];
+            return response()->fai(['msg' => '参数错误']);
         }
 
         $result = $this->manageUserRepository->distribute($role_ids, $id);
         if (!$result) {
-            return ['err' => true, 'msg' => '操作失败'];
+            return response()->fai(['msg' => '操作失败']);
         }
-        return ['err' => false, 'msg' => '操作成功', 'redirect' => true];
+        return response()->suc(['msg' => '操作成功', 'redirect' => true]);
     }
 
     /**
@@ -288,14 +288,14 @@ class ManageUserController extends Controller
 
         $data = $this->manageUserRepository->getRole($id);
         if (!$data) {
-            return ['err' => true, 'msg' => '参数错误'];
+            return response()->fai(['msg' => '参数错误']);
         }
 
         $result = $this->manageUserRepository->rolesDistribute($permission_ids, $id);
         if (!$result) {
-            return ['err' => true, 'msg' => '操作失败'];
+            return response()->fai(['msg' => '操作失败']);
         }
-        return ['err' => false, 'msg' => '操作成功', 'redirect' => true];
+        return response()->suc(['msg' => '操作成功', 'redirect' => true]);
     }
 
     /**
@@ -329,9 +329,9 @@ class ManageUserController extends Controller
 
         $result = $this->manageUserRepository->permissionsGroup($request_data);
         if ($result === false) {
-            return ['err' => true, 'msg' => '分组失败'];
+            return response()->fai(['msg' => '分组失败']);
         }
 
-        return ['err' => false, 'msg' => '分组成功', 'reload' => true];
+        return response()->suc(['msg' => '分组成功', 'reload' => true]);
     }
 }

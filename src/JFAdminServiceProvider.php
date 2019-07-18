@@ -48,6 +48,16 @@ class JFAdminServiceProvider extends ServiceProvider
             return $user->hasRole(config('jfadmin.super_role')) ? true : null;
         });
 
+        $this->app['Illuminate\Contracts\Routing\ResponseFactory']->macro('suc', function ($value) {
+            $value['err'] = false;
+            return response()->json($value);
+        });
+
+        $this->app['Illuminate\Contracts\Routing\ResponseFactory']->macro('fai', function ($value) {
+            $value['err'] = true;
+            return response()->json($value);
+        });
+
         if ($this->app->runningInConsole()) {
             $this->publishes([__DIR__ . '/../config' => config_path()], 'jfadmin-config');
             $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'jfadmin-migrations');

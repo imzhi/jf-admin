@@ -99,11 +99,7 @@ class AuthController extends Controller
         $user->save();
 
         $redirect = $request->session()->pull('url.intended', route('jfadmin::show.index'));
-        return [
-            'err' => false,
-            'msg' => '登录成功',
-            'redirect' => $redirect,
-        ];
+        return response()->suc(['msg' => '登录成功', 'redirect' => $redirect]);
     }
 
     /**
