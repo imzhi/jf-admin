@@ -67,6 +67,8 @@ class JFAdminServiceProvider extends ServiceProvider
     {
         $this->loadAdminAuthConfig();
 
+        $this->loadAdminPermissionConfig();
+
         $this->registerRouteMiddleware();
 
         $this->commands($this->commands);
@@ -86,5 +88,10 @@ class JFAdminServiceProvider extends ServiceProvider
     protected function loadAdminAuthConfig()
     {
         config(array_dot(config('jfadmin.auth', []), 'auth.'));
+    }
+
+    protected function loadAdminPermissionConfig()
+    {
+        config(array_dot(config('jfadmin.permission', []), 'permission.'));
     }
 }

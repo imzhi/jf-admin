@@ -38,6 +38,14 @@ return [
         ],
     ],
 
+    // 管理员权限表配置
+    'permission' => [
+        'models' => [
+            'permission' => Imzhi\JFAdmin\Models\Permission::class,
+            'role' => Imzhi\JFAdmin\Models\Role::class,
+        ],
+    ],
+
     // 路由配置
     'route' => [
         'prefix' => 'jfadmin',
