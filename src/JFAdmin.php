@@ -53,4 +53,24 @@ class JFAdmin
             });
         });
     }
+
+    public static function logActivity()
+    {
+        $request = request();
+
+        $properties = [
+            '_route_' => $request->route() ? $request->route()->getName() : null,
+            '_url_' => $request->url(),
+            '_path_' => $request->path(),
+            '_method_' => $request->method(),
+            '_params_' => $request->input(),
+            '_ip_' => $request->ip(),
+            '_ua_' => $request->userAgent(),
+            '_ajax_' => $request->ajax(),
+        ];
+
+        activity()->causedBy($request->user('admin_user'))
+            ->withProperties($properties)
+            ->log($properties['_route_']);
+    }
 }

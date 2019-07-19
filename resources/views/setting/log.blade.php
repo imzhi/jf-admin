@@ -84,7 +84,7 @@
                             </thead>
                             <tbody>
                                 @forelse($list as $item)
-                                <tr data-id="{{ $item->id }}" data-changes='{!! $item->changes() !!}'>
+                                <tr data-id="{{ $item->id }}" data-properties='{!! $item->properties !!}'>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->log_name }}</td>
                                     <td>{{ $item->description }}</td>
@@ -123,22 +123,70 @@
                 <h4 class="modal-title">操作日志详情</h4>
             </div>
             <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover golden-table">
-                        <colgroup>
-                            <col width="20%">
-                            <col width="40%">
-                            <col width="40%">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>字段名</th>
-                                <th>新值</th>
-                                <th>旧值</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div id="request-block" class="d-none">
+                    <h3 class="m-t-none m-b">请求详情</h3>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-bordered table-hover golden-table request-table">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="80%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td>路由别名</td>
+                                    <td id="_route_" class="td-break"></td>
+                                </tr>
+                                <tr>
+                                    <td>请求 URL</td>
+                                    <td id="_url_" class="td-break"></td>
+                                </tr>
+                                <tr>
+                                    <td>请求路径</td>
+                                    <td id="_path_" class="td-break"></td>
+                                </tr>
+                                <tr>
+                                    <td>请求方法</td>
+                                    <td id="_method_"></td>
+                                </tr>
+                                <tr>
+                                    <td>请求参数</td>
+                                    <td id="_params_" class="td-break"></td>
+                                </tr>
+                                <tr>
+                                    <td>Ajax 请求</td>
+                                    <td id="_ajax_"></td>
+                                </tr>
+                                <tr>
+                                    <td>IP</td>
+                                    <td id="_ip_"></td>
+                                </tr>
+                                <tr>
+                                    <td>User Agent</td>
+                                    <td id="_ua_" class="td-break"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="field-block" class="d-none">
+                    <h3 class="m-t-none m-b">字段修改</h3>
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-bordered table-hover golden-table field-table">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="40%">
+                                <col width="40%">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>字段名</th>
+                                    <th>新值</th>
+                                    <th>旧值</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -158,31 +206,57 @@
             $('#log-detail-modal').on('show.bs.modal', function (evt) {
                 const modal_body = $(this).find('.modal-body');
                 const tr = $(evt.relatedTarget).closest('tr');
-                const changes = tr.data('changes');
-                const attributes = changes.attributes;
-                const old = changes.old;
+                const properties = tr.data('properties');
+                const attributes = properties.attributes;
+                const old = properties.old;
 
                 let html = '';
                 let i = 0;
-                $.each(attributes, function(key, val) {
-                    html += '<tr>';
-                    html += '<td>' + key + '</td>';
-                    html += '<td class="td-break">' + that.wrapNull(val) + '</td>';
-                    if (!old) {
-                        if (!i) {
-                            html += '<td class="td-break text-center" rowspan="' + Object.keys(attributes).length + '">暂无数据</td>';
+                if (attributes) {
+                    $.each(attributes, function(key, val) {
+                        html += '<tr>';
+                        html += '<td>' + key + '</td>';
+                        html += '<td class="td-break">' + that.wrapVal(val) + '</td>';
+                        if (!old) {
+                            if (!i) {
+                                html += '<td class="td-break text-center" rowspan="' + Object.keys(attributes).length + '">暂无数据</td>';
+                            }
+                        } else {
+                            html += '<td class="td-break">' + that.wrapVal(old[key]) + '</td>';
                         }
+                        html += '</tr>';
+                        i++;
+                    });
+                    $('#field-block').removeClass('d-none');
+                }
+                modal_body.find('.field-table tbody').html(html ? html : '<tr><td class="td-break text-center" colspan="1000">暂无数据</td></tr>');
+
+                $.each(properties, function(key, val) {
+                    if (key === 'attributes' || key === 'old') {
+                        return true;
                     } else {
-                        html += '<td class="td-break">' + that.wrapNull(old[key]) + '</td>';
+                        $('#request-block').removeClass('d-none');
                     }
-                    html += '</tr>';
-                    i++;
+
+                    modal_body.find('.request-table tbody').find('#' + key).html(that.wrapVal(val));
                 });
-                modal_body.find('.table tbody').html(html ? html : '<tr><td class="td-break text-center" colspan="1000">暂无数据</td></tr>');
+            });
+
+            $('#log-detail-modal').on('hide.bs.modal', function() {
+                $('#request-block').addClass('d-none');
+                $('#field-block').addClass('d-none');
             });
         },
-        wrapNull: function(val) {
-            return val === null ? '<span class="badge">' + val + '</span>' : val;
+        wrapVal: function(val) {
+            if (val === null || val === true || val === false) {
+                return '<span class="badge">' + val + '</span>';
+            }
+            if ($.isPlainObject(val)) {
+                // return JSON.stringify(val, null, 2);
+                return JSON.stringify(val);
+            }
+            return val;
+
         },
         init: function() {
             $('[name=daterange]').daterangepicker(JFA.daterangepicker_conf);

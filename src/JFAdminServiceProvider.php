@@ -49,12 +49,16 @@ class JFAdminServiceProvider extends ServiceProvider
         });
 
         $this->app['Illuminate\Contracts\Routing\ResponseFactory']->macro('suc', function ($value) {
+            JFAdmin::logActivity();
+
             $value['err'] = false;
+
             return response()->json($value);
         });
 
         $this->app['Illuminate\Contracts\Routing\ResponseFactory']->macro('fai', function ($value) {
             $value['err'] = true;
+
             return response()->json($value);
         });
 
