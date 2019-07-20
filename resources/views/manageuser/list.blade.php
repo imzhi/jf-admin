@@ -119,7 +119,10 @@
                                     <td>
                                         <button type="button" class="btn btn-default status-btn" data-url="{{ route('jfadmin::manageuser.status') }}">{{ $item->status_text_r }}</button>
                                         <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
-                                        <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default">分配角色</a>
+                                        <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default {{ $item->is_init ? 'disabled' : '' }}">分配角色</a>
+                                        @if($item->is_init)
+                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="禁止修改初始管理员角色"></i>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

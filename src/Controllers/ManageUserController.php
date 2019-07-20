@@ -234,6 +234,10 @@ class ManageUserController extends Controller
             return redirect(url()->previous())->withErrors('参数错误');
         }
 
+        if ($this->manageUserRepository->ifInitAdmin($data->id)) {
+            return redirect(url()->previous())->withErrors('禁止修改初始管理员角色');
+        }
+
         $list = $this->manageUserRepository->allRoles();
 
         $user_roles = $data->roles->pluck('id')->all();
@@ -252,6 +256,10 @@ class ManageUserController extends Controller
         $data = $this->manageUserRepository->get($id);
         if (!$data) {
             return response()->fai(['msg' => '参数错误']);
+        }
+
+        if ($this->manageUserRepository->ifInitAdmin($data->id)) {
+            return response()->fai(['msg' => '禁止修改初始管理员角色']);
         }
 
         $result = $this->manageUserRepository->distribute($role_ids, $id);

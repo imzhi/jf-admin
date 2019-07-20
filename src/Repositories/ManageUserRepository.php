@@ -57,6 +57,9 @@ class ManageUserRepository
         $list->transform(function ($item) use ($status_rels) {
             $item->status_text = $status_rels[$item->status];
             $item->status_text_r = $status_rels[$this->statusReverse($item->status)];
+
+            $item->is_init = $this->ifInitAdmin($item->id);
+
             return $item;
         });
 
@@ -152,6 +155,11 @@ class ManageUserRepository
     public function ifSuperRole($role)
     {
         return in_array($role->name, (array) config('jfadmin.super_role'));
+    }
+
+    public function ifInitAdmin($id)
+    {
+        return $id === 1;
     }
 
     public function getRole($id)
