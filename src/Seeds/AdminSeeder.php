@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
         ]);
 
         $role = Role::firstOrCreate([
-            'name' => config('jfadmin.super_role'),
+            'name' => (array) config('jfadmin.super_role')[0],
             'guard_name' => 'admin_user',
         ]);
 
