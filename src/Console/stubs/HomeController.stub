@@ -11,7 +11,16 @@ class HomeController extends Controller
      */
     protected function showIndex()
     {
-        $envs = [
+        $envs = $this->envs();
+        $json = file_get_contents(base_path('composer.json'));
+        $dependencies = json_decode($json, true)['require'];
+        $nav_id = 'home.index';
+        return view('jfadmin::home.index', compact('envs', 'dependencies', 'nav_id'));
+    }
+
+    private function envs()
+    {
+        return [
             ['name' => 'PHP version',       'value' => PHP_VERSION],
             ['name' => 'Laravel version',   'value' => app()->version()],
             ['name' => 'CGI',               'value' => php_sapi_name()],
@@ -27,9 +36,5 @@ class HomeController extends Controller
             ['name' => 'Env',               'value' => config('app.env')],
             ['name' => 'URL',               'value' => config('app.url')],
         ];
-        $json = file_get_contents(base_path('composer.json'));
-        $dependencies = json_decode($json, true)['require'];
-        $nav_id = 'home.index';
-        return view('jfadmin::home.index', compact('envs', 'dependencies', 'nav_id'));
     }
 }
