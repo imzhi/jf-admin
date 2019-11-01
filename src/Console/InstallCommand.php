@@ -19,7 +19,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'install the jf-admin package';
+    protected $description = 'Install the jf-admin package.';
 
     /**
      * Create a new command instance.
@@ -38,11 +38,17 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        if (!file_exists(config_path('jfadmin.php'))) {
+            $config = str_replace(base_path(), '', config_path('jfadmin.php'));
+            $this->comment("Install stop, file <{$config}> does not exist.");
+            return;
+        }
+
         $this->initDatabase();
 
         $this->initDirectory();
 
-        $this->info('install successfully');
+        $this->info('Install successfully.');
     }
 
     protected function initDatabase()
@@ -50,14 +56,12 @@ class InstallCommand extends Command
         $this->call('migrate');
 
         if (AdminUser::count() !== 0) {
-            $this->comment('database already init');
-            return false;
+            $this->comment('Admin user already exist.');
+        } else {
+            $this->call('db:seed', ['--class' => \Imzhi\JFAdmin\Seeds\AdminSeeder::class]);
         }
 
-        $this->call('db:seed', ['--class' => \Imzhi\JFAdmin\Seeds\AdminSeeder::class]);
-
-        $this->info('database init successfully');
-        return true;
+        $this->info('Init database successfully.');
     }
 
     protected function initDirectory()
@@ -75,16 +79,16 @@ class InstallCommand extends Command
         $this->createFile("{$directory}/routes.php", 'routes');
     }
 
-    protected function makeDir($path = '')
+    protected function makeDir($path)
     {
         $result = $this->laravel['files']->makeDirectory($path, 0755, true, true);
         $directory = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("directory <{$directory}> already init");
+            $this->comment("Directory <{$directory}> already exist.");
             return false;
         }
 
-        $this->info("directory <{$directory}> init successfully");
+        $this->info("Init directory <{$directory}> successfully.");
         return true;
     }
 
@@ -92,7 +96,7 @@ class InstallCommand extends Command
     {
         $file = str_replace(base_path(), '', $path);
         if (file_exists($path)) {
-            $this->comment("file <{$file}> already init");
+            $this->comment("File <{$file}> already exist.");
             return false;
         }
 
@@ -100,7 +104,7 @@ class InstallCommand extends Command
         $file_content = $callback ? $callback($file_content) : $file_content;
         $this->laravel['files']->put($path, $file_content);
 
-        $this->info("file <{$file}> init successfully");
+        $this->info("Init file <{$file}> successfully.");
         return true;
     }
 

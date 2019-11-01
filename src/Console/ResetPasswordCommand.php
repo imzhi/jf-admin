@@ -19,7 +19,7 @@ class ResetPasswordCommand extends Command
      *
      * @var string
      */
-    protected $description = 'reset password for admin user';
+    protected $description = 'Reset password for admin user.';
 
     /**
      * Create a new command instance.
@@ -47,26 +47,26 @@ class ResetPasswordCommand extends Command
             });
             $repeat = !$user;
             if ($repeat) {
-                $this->error("admin name \"{$anticipate}\" does not exist");
+                $this->error("Admin name \"{$anticipate}\" does not exist.");
             }
         } while ($repeat);
 
         do {
-            $secret = $this->secret("please enter password for \"{$anticipate}\"");
+            $secret = $this->secret("Please enter password for \"{$anticipate}\".");
             $repeat = strlen($secret) < 6;
             if ($repeat) {
-                $this->error('password must not be less than 6 characters, please re-enter password');
+                $this->error('Password must not be less than 6 characters, please re-enter password.');
                 continue;
             }
-            $repeat = $secret !== $this->secret("please enter confirm password for \"{$anticipate}\"");
+            $repeat = $secret !== $this->secret("Please enter confirm password for \"{$anticipate}\".");
             if ($repeat) {
-                $this->error('inconsistent password, please re-enter password');
+                $this->error('Repeated password is inconsistent, please re-enter password.');
             }
         } while ($repeat);
 
         $user->password = bcrypt($secret);
         $user->save();
 
-        $this->info('reset password successfully');
+        $this->info('Reset password successfully.');
     }
 }

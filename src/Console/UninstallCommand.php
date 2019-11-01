@@ -18,7 +18,7 @@ class UninstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'uninstall the jf-admin package';
+    protected $description = 'Uninstall the jf-admin package.';
 
     /**
      * Create a new command instance.
@@ -37,12 +37,12 @@ class UninstallCommand extends Command
      */
     public function handle()
     {
-        if (!$this->confirm('confirm uninstall jf-admin package?')) {
+        if (!$this->confirm('Confirm uninstall jf-admin package?')) {
             return;
         }
 
         if (!file_exists(config_path('jfadmin.php'))) {
-            $this->comment('uninstall already');
+            $this->comment('Uninstall already.');
             return;
         }
 
@@ -56,7 +56,7 @@ class UninstallCommand extends Command
 
         $this->delDir(resource_path('views/vendor/jfadmin'));
 
-        $this->info('uninstall successfully');
+        $this->info('Uninstall successfully.');
     }
 
     protected function delDir($path)
@@ -64,11 +64,11 @@ class UninstallCommand extends Command
         $result = $this->laravel['files']->deleteDirectory($path);
         $directory = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("directory <{$directory}> delete failed");
+            $this->comment("Delete directory <{$directory}> failed.");
             return false;
         }
 
-        $this->info("directory <{$directory}> delete successfully");
+        $this->info("Delete directory <{$directory}> successfully.");
         return true;
     }
 
@@ -77,11 +77,11 @@ class UninstallCommand extends Command
         $result = $this->laravel['files']->delete($path);
         $file = str_replace(base_path(), '', $path);
         if (!$result) {
-            $this->comment("file <{$file}> delete failed");
+            $this->comment("Delete file <{$file}> failed.");
             return false;
         }
 
-        $this->info("file <{$file}> delete successfully");
+        $this->info("Delete file <{$file}> successfully.");
         return true;
     }
 }
