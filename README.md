@@ -6,6 +6,7 @@ __内容：__
 - [文档](#文档)
 - [环境](#环境)
 - [安装](#安装)
+- [许可证](#许可证)
 
 简介
 ----
@@ -48,6 +49,14 @@ jf-admin 提供后台登录、权限控制和操作日志查看等功能。权�
     ├── Requests
     └── Seeds
 ```
+
+### 依赖包
+
+包名|约束版本|说明
+---|---|---
+[mews/captcha](https://github.com/mewebstudio/captcha)|^2.2|图形验证码
+[spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)|^2.8|操作日志记录
+[spatie/laravel-permission](https://github.com/spatie/laravel-permission)|^2.37|权限控制
 
 ### 安装说明
 
@@ -95,7 +104,9 @@ __安装命令__
 php artisan jfadmin:install
 ```
 
-执行上一次发布的迁移文件，并且生成初始的管理员用户。
+首先会检查配置文件 ``config/jfadmin.php`` 是否存在，安装时需要用到。
+
+执行迁移文件，并且生成初始的管理员用户（默认用户名：admin，密码：admin）。
 
 新建目录（默认为 app/JFAdmin），并生成后台首页控制器类文件（HomeController）和路由文件（routes.php）：
 
@@ -121,7 +132,7 @@ php artisan jfadmin:uninstall
 - ``resource_path('lang/vendor/jfadmin')``
 - ``resource_path('views/vendor/jfadmin')``
 
-请注意：卸载命令不会去更改数据表。
+请注意：卸载命令不会去更改数据表。卸载成功后如需重新安装请先执行发布命令再执行安装命令。
 
 ### 配置项
 
@@ -184,7 +195,7 @@ php artisan jfadmin:reset-password
 环境
 ----
 
-- PHP >= 7.0
+- PHP >= 7.1.3
 - Laravel >= 5.5
 
 安装
@@ -200,12 +211,27 @@ composer require imzhi/jf-admin ^1.1
 
 __第二步__
 
-发布 laravel-permission 和 laravel-activitylog 的迁移文件，并执行迁移命令：
+发布 [laravel-permission](https://github.com/spatie/laravel-permission) 和 [laravel-activitylog](https://github.com/spatie/laravel-activitylog) 扩展包的迁移文件，并执行迁移命令：
 
 ```
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"
 php artisan vendor:publish --provider="Spatie\Activitylog\ActivitylogServiceProvider" --tag="migrations"
 php artisan migrate --step
+```
+
+发布 [mews/captcha](https://github.com/mewebstudio/captcha) 扩展包的配置文件：
+
+```
+php artisan vendor:publish --provider="Mews\Captcha\CaptchaServiceProvider"
+```
+
+修改配置文件 ``config/captcha.php`` 的 length，修改成 4：
+
+```php
+return [
+    // 省略
+    'default' => [
+        'length' => 4,
 ```
 
 __第三步__
@@ -219,4 +245,9 @@ php artisan jfadmin:install
 
 经过以上三步，扩展包安装成功。
 
-访问 URL 为：<http://xxx.xxx/jfadmin>，默认用户名：admin，密码：admin。
+访问 URL 为：<http://xxx.xxx/jfadmin/login>，默认用户名：admin，密码：admin。
+
+许可证
+---
+
+jf-admin 扩展包使用 [MIT](/imzhi/jf-admin/blob/master/LICENSE) 许可证。
