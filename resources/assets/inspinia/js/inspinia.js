@@ -1,11 +1,13 @@
 /*
  *
  *   INSPINIA - Responsive Admin Theme
- *   version 2.8
+ *   version 2.9.2
  *
  */
 
+
 $(document).ready(function () {
+
 
     // Fast fix bor position issue with Propper.js
     // Will be fixed in Bootstrap 4.1 - https://github.com/twbs/bootstrap/pull/24092
@@ -21,10 +23,6 @@ $(document).ready(function () {
 
     // MetisMenu
     var sideMenu = $('#side-menu').metisMenu();
-
-    sideMenu.on('shown.metisMenu', function (e) {
-        fix_height();
-    });
 
     // Collapse ibox function
     $('.collapse-link').on('click', function (e) {
@@ -119,6 +117,7 @@ $(document).ready(function () {
     // Minimalize menu
     $('.navbar-minimalize').on('click', function (event) {
         event.preventDefault();
+        localStorage.setItem('collapse_menu', $('body').hasClass('mini-navbar') ? 'off' : 'on')
         $("body").toggleClass("mini-navbar");
         SmoothlyMenu();
 
@@ -149,7 +148,14 @@ $(document).ready(function () {
     })
 });
 
-
+// Minimalize menu when screen is less than 768px
+$(window).bind(" resize", function () {
+    if ($(this).width() < 769) {
+        $('body').addClass('body-small')
+    } else {
+        $('body').removeClass('body-small')
+    }
+});
 
 // Fixed Sidebar
 $(window).bind("load", function () {
@@ -161,44 +167,10 @@ $(window).bind("load", function () {
     }
 });
 
-function fix_height() {
-    var heightWithoutNavbar = $("body > #wrapper").height() - 62;
-    $(".sidebar-panel").css("min-height", heightWithoutNavbar + "px");
 
-    var navbarheight = $('nav.navbar-default').height();
-    var wrapperHeight = $('#page-wrapper').height();
-
-    if (navbarheight > wrapperHeight) {
-        $('#page-wrapper').css("min-height", navbarheight + "px");
-    }
-
-    if (navbarheight < wrapperHeight) {
-        $('#page-wrapper').css("min-height", $(window).height() + "px");
-    }
-
-    if ($('body').hasClass('fixed-nav')) {
-        if (navbarheight > wrapperHeight) {
-            $('#page-wrapper').css("min-height", navbarheight + "px");
-        } else {
-            $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
-        }
-    }
-
-}
-
-$(window).bind("load resize scroll", function () {
-
-    // Full height of sidebar
-    setTimeout(function(){
-        if (!$("body").hasClass('body-small')) {
-            fix_height();
-        }
-    })
-
-});
 
 // Minimalize menu when screen is less than 768px
-$(window).bind("resize", function () {
+$(window).bind("load resize", function () {
     if ($(this).width() < 769) {
         $('body').addClass('body-small')
     } else {
