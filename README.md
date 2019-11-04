@@ -57,6 +57,7 @@ jf-admin 提供后台登录、权限控制和操作日志查看等功能。权�
 [mews/captcha](https://github.com/mewebstudio/captcha)|^2.2|图形验证码
 [spatie/laravel-activitylog](https://github.com/spatie/laravel-activitylog)|^2.8|操作日志记录
 [spatie/laravel-permission](https://github.com/spatie/laravel-permission)|^2.37|权限控制
+[doctrine/annotations](https://github.com/doctrine/annotations)|^1.8|注解解析
 
 ### 安装说明
 
