@@ -1,5 +1,7 @@
 jf-admin 是基于 Laravel 5.5+ 的扩展包，助你构建自己的后台管理系统。
 
+:star2: 演示站点：<https://jfadmin.imzhi.me/jfadmin/login>，用户名：admin，密码：admin。
+
 __内容：__
 
 - [简介](#简介)
