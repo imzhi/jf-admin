@@ -3,11 +3,12 @@
 namespace App\JFAdmin\Controllers;
 
 use App\Http\Controllers\Controller;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 
 class HomeController extends Controller
 {
     /**
-     * 公共功能-后台首页
+     * @PermissionAnnotation(name="公共功能-后台首页")
      */
     protected function showIndex()
     {

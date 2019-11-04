@@ -12,6 +12,8 @@ use Imzhi\JFAdmin\Models\Role;
 use Imzhi\JFAdmin\Models\AdminUser;
 use Imzhi\JFAdmin\Models\Permission;
 use Imzhi\JFAdmin\Models\PermissionExtra;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 
 class ManageUserRepository
 {
@@ -248,6 +250,8 @@ class ManageUserRepository
 
     public function permissionsDetect()
     {
+        $reader = new AnnotationReader;
+
         $routes_data = [];
         foreach (Route::getRoutes() as $route) {
             $route_name = $route->getName();
@@ -261,10 +265,11 @@ class ManageUserRepository
                 if (!method_exists($action_arr[0], $action_arr[1])) {
                     continue;
                 }
+
                 try {
                     $reflection_method = new ReflectionMethod($action_arr[0], $action_arr[1]);
-                    $comment = explode("\n", $reflection_method->getDocComment())[1];
-                    $comment = trim($comment, " \t\n\r\0\x0B*");
+                    $permission_annotation = $reader->getMethodAnnotation($reflection_method, PermissionAnnotation::class);
+                    $permission_name = $permission_annotation->name;
                 } catch (Exception $e) {
                     Log::debug('jfadmin::manageuser.permissions.detect err', [
                         'message' => $e->getMessage(),
@@ -274,7 +279,8 @@ class ManageUserRepository
                     ]);
                     return response()->fai(['msg' => "检测出错。控制器方法 {$action_name} 缺少注释。"]);
                 }
-                $routes_data[$route_name] = $comment;
+
+                $routes_data[$route_name] = $permission_name;
             }
         }
         $routes_key = array_keys($routes_data);

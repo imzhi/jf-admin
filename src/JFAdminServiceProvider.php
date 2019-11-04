@@ -3,6 +3,7 @@
 namespace Imzhi\JFAdmin;
 
 use Illuminate\Support\ServiceProvider;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class JFAdminServiceProvider extends ServiceProvider
 {
@@ -70,6 +71,8 @@ class JFAdminServiceProvider extends ServiceProvider
             $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/jfadmin/layouts')], 'jfadmin-views');
             $this->publishes([__DIR__ . '/../resources/views/home' => resource_path('views/vendor/jfadmin/home')], 'jfadmin-views');
         }
+
+        AnnotationRegistry::registerFile(__DIR__ . '/Annotations/PermissionAnnotation.php');
     }
 
     /**

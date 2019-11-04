@@ -3,8 +3,9 @@
 namespace Imzhi\JFAdmin\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Imzhi\JFAdmin\Requests\Pwd;
+use App\Http\Controllers\Controller;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 use Imzhi\JFAdmin\Repositories\AdminUserRepository;
 
 class ProfileController extends Controller
@@ -19,7 +20,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * 公共功能-修改密码页面
+     * @PermissionAnnotation(name="公共功能-修改密码页面")
      */
     protected function showPwd()
     {
@@ -28,7 +29,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * 公共功能-修改密码操作
+     * @PermissionAnnotation(name="公共功能-修改密码操作")
      */
     protected function pwd(Pwd $request)
     {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 
 class AuthController extends Controller
 {
@@ -33,7 +34,7 @@ class AuthController extends Controller
     }
 
     /**
-     * 后台登录页面
+     * @PermissionAnnotation(name="后台登录页面")
      */
     protected function showLoginForm()
     {

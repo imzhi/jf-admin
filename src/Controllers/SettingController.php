@@ -3,9 +3,10 @@
 namespace Imzhi\JFAdmin\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Imzhi\JFAdmin\Models\Setting;
+use App\Http\Controllers\Controller;
 use Imzhi\JFAdmin\Repositories\LogRepository;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 
 class SettingController extends Controller
 {
@@ -16,7 +17,7 @@ class SettingController extends Controller
     }
 
     /**
-     * 设置-操作日志列表页
+     * @PermissionAnnotation(name="设置-操作日志列表页")
      */
     protected function showLog()
     {

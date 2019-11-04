@@ -9,6 +9,7 @@ use Imzhi\JFAdmin\Models\AdminUser;
 use Imzhi\JFAdmin\Requests\ManageUserCreate;
 use Imzhi\JFAdmin\Requests\ManageUserDistribute;
 use Imzhi\JFAdmin\Requests\ManageUserRolesCreate;
+use Imzhi\JFAdmin\Annotations\PermissionAnnotation;
 use Imzhi\JFAdmin\Repositories\ManageUserRepository;
 use Imzhi\JFAdmin\Requests\ManageUserRolesDistribute;
 use Imzhi\JFAdmin\Requests\ManageUserPermissionsGroup;
@@ -25,7 +26,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-成员列表页
+     * @PermissionAnnotation(name="管理员管理-成员列表页")
      */
     protected function showList()
     {
@@ -46,7 +47,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-新增/编辑成员页
+     * @PermissionAnnotation(name="管理员管理-新增/编辑成员页")
      */
     protected function showCreate($id = null)
     {
@@ -72,7 +73,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-新增/编辑成员操作
+     * @PermissionAnnotation(name="管理员管理-新增/编辑成员操作")
      */
     protected function create(ManageUserCreate $request)
     {
@@ -124,7 +125,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-成员状态操作
+     * @PermissionAnnotation(name="管理员管理-成员状态操作")
      */
     protected function status()
     {
@@ -154,7 +155,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-角色列表页
+     * @PermissionAnnotation(name="管理员管理-角色列表页")
      */
     protected function showRoles()
     {
@@ -167,7 +168,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-新增/编辑角色页
+     * @PermissionAnnotation(name="管理员管理-新增/编辑角色页")
      */
     protected function showRolesCreate($id = null)
     {
@@ -190,7 +191,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-新增/编辑角色操作
+     * @PermissionAnnotation(name="管理员管理-新增/编辑角色操作")
      */
     protected function rolesCreate(ManageUserRolesCreate $request)
     {
@@ -231,7 +232,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-成员分配角色页
+     * @PermissionAnnotation(name="管理员管理-成员分配角色页")
      */
     protected function showDistribute($id)
     {
@@ -252,7 +253,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-成员分配角色操作
+     * @PermissionAnnotation(name="管理员管理-成员分配角色操作")
      */
     protected function distribute(ManageUserDistribute $request)
     {
@@ -276,7 +277,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-角色分配权限页
+     * @PermissionAnnotation(name="管理员管理-角色分配权限页")
      */
     protected function showRolesDistribute($id)
     {
@@ -298,7 +299,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-角色分配权限操作
+     * @PermissionAnnotation(name="管理员管理-角色分配权限操作")
      */
     protected function rolesDistribute(ManageUserRolesDistribute $request)
     {
@@ -318,7 +319,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-权限列表页
+     * @PermissionAnnotation(name="管理员管理-权限列表页")
      */
     protected function showPermissions()
     {
@@ -337,7 +338,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-权限批量检测操作
+     * @PermissionAnnotation(name="管理员管理-权限批量检测操作")
      */
     protected function permissionsDetect()
     {
@@ -346,7 +347,7 @@ class ManageUserController extends Controller
     }
 
     /**
-     * 管理员管理-权限批量分组操作
+     * @PermissionAnnotation(name="管理员管理-权限批量分组操作")
      */
     protected function permissionsGroup(ManageUserPermissionsGroup $request)
     {
