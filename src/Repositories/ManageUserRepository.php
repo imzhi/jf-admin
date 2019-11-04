@@ -2,6 +2,7 @@
 
 namespace Imzhi\JFAdmin\Repositories;
 
+use DB;
 use Log;
 use Route;
 use Exception;
@@ -219,6 +220,24 @@ class ManageUserRepository
     public function permissions(array $args = [])
     {
         $list = Permission::where(function ($query) use ($args) {
+            $route = $args['route'] ?? '';
+            if ($route) {
+                $query->where('name', 'like', "%{$route}%");
+            }
+
+            $cate = $args['cate'] ?? '';
+            $name = $args['name'] ?? '';
+            if ($name || $cate) {
+                $query->whereHas('permissionExtra', function ($hasQuery) use ($cate, $name) {
+                    if ($cate) {
+                        $hasQuery->where('extra_cate', $cate);
+                    }
+
+                    if ($name) {
+                        $hasQuery->where('extra_name', 'like', "%{$name}%");
+                    }
+                });
+            }
         })
             ->with('permissionExtra')
             ->orderBy('id')
@@ -366,6 +385,15 @@ class ManageUserRepository
         }
 
         return $list;
+    }
+
+    public function permissionExtraCates()
+    {
+        return PermissionExtra::orderBy('extra_cate')
+            ->get([
+                DB::raw('distinct(`extra_cate`) as `extra_cate`'),
+            ])
+            ->pluck('extra_cate');
     }
 
     public function rolesDistribute($permissionIds, $id)

@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="ibox-content clearfix">
-                    <div class="row">
+                    <div class="row form-group">
                         <div class="col-md-3">
                             <a href="{{ route('jfadmin::show.manageuser.roles.create') }}" class="btn btn-default">新增</a>
                         </div>

@@ -36,7 +36,13 @@ class ManageUserController extends Controller
         $status_rels = AdminUser::statusRels();
         $roles = $this->manageUserRepository->allRoles();
         $nav_id = 'manageuser.list';
-        return view('jfadmin::manageuser.list', compact('request_data', 'list', 'status_rels', 'roles', 'nav_id'));
+        return view('jfadmin::manageuser.list', compact(
+            'request_data',
+            'list',
+            'status_rels',
+            'roles',
+            'nav_id'
+        ));
     }
 
     /**
@@ -283,7 +289,12 @@ class ManageUserController extends Controller
 
         $role_permissions = $data->permissions->pluck('id')->all();
         $nav_id = 'manageuser.roles';
-        return view('jfadmin::manageuser.roles_distribute', compact('data', 'list', 'role_permissions', 'nav_id'));
+        return view('jfadmin::manageuser.roles_distribute', compact(
+            'data',
+            'list',
+            'role_permissions',
+            'nav_id'
+        ));
     }
 
     /**
@@ -315,8 +326,14 @@ class ManageUserController extends Controller
 
         $list = $this->manageUserRepository->permissions($request_data);
 
+        $permission_extra_cates = $this->manageUserRepository->permissionExtraCates();
         $nav_id = 'manageuser.permissions';
-        return view('jfadmin::manageuser.permissions', compact('request_data', 'list', 'nav_id'));
+        return view('jfadmin::manageuser.permissions', compact(
+            'request_data',
+            'list',
+            'permission_extra_cates',
+            'nav_id'
+        ));
     }
 
     /**

@@ -34,12 +34,50 @@
                     </div>
                 </div>
                 <div class="ibox-content clearfix">
-                    <div class="row">
+                    <div class="row form-group">
                         <div class="col-md-12">
                             <a href="javascript:" class="btn btn-default" id="detect-btn" data-url="{{ route('jfadmin::manageuser.permissions.detect') }}">检测</a>
                             <a href="javascript:" class="btn btn-default" id="group-btn" data-url="{{ route('jfadmin::manageuser.permissions.group') }}">分组</a>
                         </div>
                     </div>
+                    <form action="{{ route('jfadmin::show.manageuser.permissions') }}">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">所属分组</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control" name="cate" style="padding: 0 12px;">
+                                            <option value="">选择分组</option>
+                                            @foreach($permission_extra_cates as $item)
+                                            <option value="{{ $item }}" {{  !empty($request_data['cate']) && $request_data['cate'] == $item ? 'selected' : '' }}>{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">权限</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="name" class="form-control" value="{{ $request_data['name'] ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">路由</label>
+                                    <div class="col-md-8">
+                                        <input type="text" name="route" class="form-control" value="{{ $request_data['route'] ?? '' }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover golden-table">
                             <colgroup>
