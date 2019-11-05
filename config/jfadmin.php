@@ -8,7 +8,7 @@ return [
     // 欢迎语句
     'welcome' => '欢迎来到 jf-admin 后台管理系统',
     // 登录页背景图
-    'wallpaper' => 'https://i.loli.net/2019/07/17/5d2e7e7ccc59b26675.jpg',
+    'wallpaper' => 'http://upcdn.imzhi.me/jfadmin/5d2e7e7ccc59b26675.jpg',
     // 登录页标题文字 class
     'wallpaper_class' => 'text-white',
 
