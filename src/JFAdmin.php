@@ -12,18 +12,18 @@ class JFAdmin
     public function routes()
     {
         $attributes = [
+            'middleware' => 'web',
+            'namespace' => '\Imzhi\JFAdmin\Controllers',
             'prefix' => config('jfadmin.route.prefix'),
             'as' => config('jfadmin.route.as'),
             'domain' => config('jfadmin.route.domain'),
-            'middleware' => 'web',
-            'namespace' => '\Imzhi\JFAdmin\Controllers',
         ];
         app('router')->group($attributes, function ($router) {
             $router->get('login', 'AuthController@showLoginForm')->name('show.login');
             $router->post('login', 'AuthController@login')->name('login');
             $router->get('logout', 'AuthController@logout')->name('logout');
 
-            $router->middleware('jfadmin')->group(function ($router) {
+            $router->middleware(config('jfadmin.route.middleware'))->group(function ($router) {
                 // 修改密码
                 $router->get('profile/pwd', 'ProfileController@showPwd')->name('show.profile.pwd');
                 $router->post('profile/pwd', 'ProfileController@pwd')->name('profile.pwd');
