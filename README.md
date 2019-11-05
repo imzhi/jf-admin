@@ -259,4 +259,4 @@ php artisan jfadmin:install
 许可证
 ---
 
-jf-admin 扩展包使用 [MIT](/imzhi/jf-admin/blob/master/LICENSE) 许可证。
+jf-admin 扩展包使用 [MIT](/blob/master/LICENSE) 许可证。
