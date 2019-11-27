@@ -2,6 +2,12 @@
     "name": "imzhi/jf-admin",
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "imzhi",
+            "email": "yxz_blue@126.com"
+        }
+    ],
     "require": {
         "php": ">=7.1.3",
         "mews/captcha": "^2.2",
