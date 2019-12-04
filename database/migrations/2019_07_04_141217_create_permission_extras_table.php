@@ -21,10 +21,10 @@ class CreatePermissionExtrasTable extends Migration
             $table->string('extra_cate');
             $table->string('extra_name');
 
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
+            // $table->foreign('permission_id')
+            //     ->references('id')
+            //     ->on($tableNames['permissions'])
+            //     ->onDelete('cascade');
 
             $table->primary('permission_id');
         });
