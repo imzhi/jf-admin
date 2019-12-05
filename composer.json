@@ -1,6 +1,7 @@
 {
     "name": "imzhi/jf-admin",
     "type": "library",
+    "description": "jf-admin 是基于 Laravel 的后台管理模板，提供后台登录、权限控制和操作日志查看等功能，前端框架使用 inspinia。",
     "license": "MIT",
     "authors": [
         {
