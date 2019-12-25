@@ -255,7 +255,7 @@ class ManageUserRepository
         $routes_data = [];
         foreach (Route::getRoutes() as $route) {
             $route_name = $route->getName();
-            $middleware = (array) $route->getAction()['middleware'];
+            $middleware = (array) ($route->getAction()['middleware'] ?? []);
             $prefix_len = strlen('jfadmin::');
             if (strlen($route_name) > $prefix_len
                 && starts_with($route_name, 'jfadmin::')
