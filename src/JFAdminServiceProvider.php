@@ -2,6 +2,7 @@
 
 namespace Imzhi\JFAdmin;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
@@ -104,11 +105,11 @@ class JFAdminServiceProvider extends ServiceProvider
 
     protected function loadAdminAuthConfig()
     {
-        config(array_dot(config('jfadmin.auth', []), 'auth.'));
+        config(Arr::dot(config('jfadmin.auth', []), 'auth.'));
     }
 
     protected function loadAdminPermissionConfig()
     {
-        config(array_dot(config('jfadmin.permission', []), 'permission.'));
+        config(Arr::dot(config('jfadmin.permission', []), 'permission.'));
     }
 }
