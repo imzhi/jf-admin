@@ -8,6 +8,7 @@ use Route;
 use Exception;
 use Carbon\Carbon;
 use ReflectionMethod;
+use Illuminate\Support\Str;
 use Imzhi\JFAdmin\Models\Role;
 use Imzhi\JFAdmin\Models\AdminUser;
 use Imzhi\JFAdmin\Models\Permission;
@@ -258,7 +259,7 @@ class ManageUserRepository
             $middleware = (array) ($route->getAction()['middleware'] ?? []);
             $prefix_len = strlen('jfadmin::');
             if (strlen($route_name) > $prefix_len
-                && starts_with($route_name, 'jfadmin::')
+                && Str::startsWith($route_name, 'jfadmin::')
                 && in_array('jfadmin', $middleware)) {
                 $action_name = $route->getActionName();
                 $action_arr = explode('@', $action_name);
