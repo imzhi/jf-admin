@@ -4,9 +4,11 @@
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>成员管理</h2>
-        <ol class="breadcrumb">
+    <div class="col-sm-6">
+        <h2 class="m-b-none">成员管理</h2>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb pull-right golden-breadcrumb">
             <li class="breadcrumb-item">
                 <span>管理员管理</span>
             </li>
@@ -15,127 +17,122 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
-    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>成员列表</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content clearfix">
-                    <div class="row form-group">
-                        <div class="col-md-3">
-                            <a href="{{ route('jfadmin::show.manageuser.create') }}" class="btn btn-default">新增</a>
-                        </div>
-                    </div>
-                    <form action="{{ route('jfadmin::show.manageuser.list') }}">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">用户名</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="account" class="form-control" value="{{ $request_data['account'] ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">邮箱</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="email" class="form-control" value="{{ $request_data['email'] ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">所属角色</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" name="role" style="padding: 0 12px;">
-                                            <option value="">选择角色</option>
-                                            @foreach($roles as $item)
-                                            <option value="{{ $item->id }}" {{  !empty($request_data['role']) && $request_data['role'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">搜索</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="80px">
-                                <col width="200px">
-                                <col width="250px">
-                                <col width="250px">
-                                <col width="180px">
-                                <col width="180px">
-                                <col width="120px">
-                                <col width="100px">
-                                <col>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>用户名</th>
-                                    <th>邮箱</th>
-                                    <th>所属角色</th>
-                                    <th>创建时间</th>
-                                    <th>登录时间</th>
-                                    <th>登录IP</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($list as $item)
-                                <tr data-id="{{ $item->id }}">
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td class="td-break">
-                                        <div style="width: 250px;">{{ $item->getRoleNames()->implode(', ') }}</div>
-                                    </td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>{{ $item->login_time }}</td>
-                                    <td>{{ $item->login_ip }}</td>
-                                    <td>{{ $item->status_text }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-default status-btn" data-url="{{ route('jfadmin::manageuser.status') }}">{{ $item->status_text_r }}</button>
-                                        <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
-                                        <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default {{ $item->is_init ? 'disabled' : '' }}">分配角色</a>
-                                        @if($item->is_init)
-                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="禁止修改初始管理员角色"></i>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>成员列表</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content clearfix">
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <a href="{{ route('jfadmin::show.manageuser.create') }}" class="btn btn-default"><i class="fa fa-plus"></i> 新增</a>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#jf-search-form"><i class="fa fa-filter"></i> 筛选</button>
                 </div>
             </div>
+            <form action="{{ route('jfadmin::show.manageuser.list') }}" id="jf-search-form" class="collapse {{ ($request_data['jf_search'] ?? '') ? 'show' : '' }}">
+                <input type="hidden" name="jf_search" value="1">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">用户名</label>
+                            <div class="col-md-8">
+                                <input type="text" name="account" class="form-control" value="{{ $request_data['account'] ?? '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">邮箱</label>
+                            <div class="col-md-8">
+                                <input type="text" name="email" class="form-control" value="{{ $request_data['email'] ?? '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">所属角色</label>
+                            <div class="col-md-8">
+                                <select class="form-control" name="role" style="padding: 0 12px;">
+                                    <option value="">选择角色</option>
+                                    @foreach($roles as $item)
+                                    <option value="{{ $item->id }}" {{  !empty($request_data['role']) && $request_data['role'] == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-info"><i class="fa fa-search"></i> 搜索</button>
+                        <a class="btn btn-default" href="{{ route('jfadmin::show.manageuser.list') }}"><i class="fa fa-undo"></i> 重置</a>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover golden-table">
+                    <colgroup>
+                        <col width="80px">
+                        <col width="200px">
+                        <col width="200px">
+                        <col width="250px">
+                        <col width="180px">
+                        <col width="180px">
+                        <col width="120px">
+                        <col width="100px">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名</th>
+                            <th>邮箱</th>
+                            <th>所属角色</th>
+                            <th>创建时间</th>
+                            <th>登录时间</th>
+                            <th>登录IP</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($list as $item)
+                        <tr data-id="{{ $item->id }}">
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->email }}</td>
+                            <td class="td-break">{{ $item->getRoleNames()->implode(', ') }}</td>
+                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->login_time }}</td>
+                            <td>{{ $item->login_ip }}</td>
+                            <td>{{ $item->status_text }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default status-btn" data-url="{{ route('jfadmin::manageuser.status') }}">{{ $item->status_text_r }}</button>
+                                <a href="{{ route('jfadmin::show.manageuser.create', [$item->id]) }}" class="btn btn-default">编辑</a>
+                                <a href="{{ route('jfadmin::show.manageuser.distribute', [$item->id]) }}" class="btn btn-default {{ $item->is_init ? 'disabled' : '' }}">分配角色</a>
+                                @if($item->is_init)
+                                <i class="fa fa-info-circle" data-toggle="tooltip" title="禁止修改初始管理员角色"></i>
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
         </div>
     </div>
 </div>

@@ -9,9 +9,11 @@
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>操作日志</h2>
-        <ol class="breadcrumb">
+    <div class="col-sm-6">
+        <h2 class="m-b-none">操作日志</h2>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb pull-right golden-breadcrumb">
             <li class="breadcrumb-item">
                 <span>设置</span>
             </li>
@@ -19,8 +21,6 @@
                 <strong>操作日志</strong>
             </li>
         </ol>
-    </div>
-    <div class="col-lg-2">
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
