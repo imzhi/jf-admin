@@ -9,9 +9,11 @@
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>操作日志</h2>
-        <ol class="breadcrumb">
+    <div class="col-sm-6">
+        <h2 class="m-b-none">操作日志</h2>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb pull-right golden-breadcrumb">
             <li class="breadcrumb-item">
                 <span>设置</span>
             </li>
@@ -20,98 +22,98 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
-    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>操作日志列表</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content clearfix">
-                    <form action="{{ route('jfadmin::show.setting.log') }}">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">日期</label>
-                                    <div class="col-md-8">
-                                        <input class="form-control" type="text" name="daterange" value="{{ $request_data['daterange'] ?? null }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary"> 搜索</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="80px">
-                                <col width="150px">
-                                <col>
-                                <col width="200px">
-                                <col width="80px">
-                                <col width="200px">
-                                <col width="80px">
-                                <col width="200px">
-                                <col width="80px">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>名称</th>
-                                    <th>描述</th>
-                                    <th>表模型</th>
-                                    <th>表ID</th>
-                                    <th>操作员模型</th>
-                                    <th>操作员ID</th>
-                                    <th>操作时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($list as $item)
-                                <tr data-id="{{ $item->id }}" data-properties='{!! $item->properties !!}'>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->log_name }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td class="td-break">
-                                        <div style="width: 200px;">{{ $item->subject_type }}</div>
-                                    </td>
-                                    <td>{{ $item->subject_id }}</td>
-                                    <td class="td-break">
-                                        <div style="width: 200px;">{{ $item->causer_type }}</div>
-                                    </td>
-                                    <td>{{ $item->causer_id }}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-default log-detail-btn" data-toggle="modal" data-target="#log-detail-modal">详情</button>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>操作日志列表</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content clearfix">
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#jf-search-form"><i class="fa fa-filter"></i> 筛选</button>
                 </div>
             </div>
+            <form action="{{ route('jfadmin::show.setting.log') }}" id="jf-search-form" class="collapse {{ ($request_data['jf_search'] ?? '') ? 'show' : '' }}">
+                <input type="hidden" name="jf_search" value="1">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">日期</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" name="daterange" value="{{ $request_data['daterange'] ?? null }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary"> 搜索</button>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover golden-table">
+                    <colgroup>
+                        <col width="80px">
+                        <col width="150px">
+                        <col>
+                        <col width="200px">
+                        <col width="80px">
+                        <col width="200px">
+                        <col width="80px">
+                        <col width="200px">
+                        <col width="80px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>表模型</th>
+                            <th>表ID</th>
+                            <th>操作员模型</th>
+                            <th>操作员ID</th>
+                            <th>操作时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($list as $item)
+                        <tr data-id="{{ $item->id }}" data-properties='{!! $item->properties !!}'>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->log_name }}</td>
+                            <td>{{ $item->description }}</td>
+                            <td class="td-break">
+                                <div style="width: 200px;">{{ $item->subject_type }}</div>
+                            </td>
+                            <td>{{ $item->subject_id }}</td>
+                            <td class="td-break">
+                                <div style="width: 200px;">{{ $item->causer_type }}</div>
+                            </td>
+                            <td>{{ $item->causer_id }}</td>
+                            <td>{{ $item->created_at }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default log-detail-btn" data-toggle="modal" data-target="#log-detail-modal">详情</button>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
         </div>
     </div>
 </div>

@@ -4,9 +4,11 @@
 
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>权限管理</h2>
-        <ol class="breadcrumb">
+    <div class="col-sm-6">
+        <h2 class="m-b-none">权限管理</h2>
+    </div>
+    <div class="col-sm-6">
+        <ol class="breadcrumb pull-right golden-breadcrumb">
             <li class="breadcrumb-item">
                 <span>管理员管理</span>
             </li>
@@ -15,112 +17,108 @@
             </li>
         </ol>
     </div>
-    <div class="col-lg-2">
-    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>权限列表</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content clearfix">
-                    <div class="row form-group">
-                        <div class="col-md-12">
-                            <a href="javascript:" class="btn btn-default" id="detect-btn" data-url="{{ route('jfadmin::manageuser.permissions.detect') }}">检测</a>
-                            <a href="javascript:" class="btn btn-default" id="group-btn" data-url="{{ route('jfadmin::manageuser.permissions.group') }}">分组</a>
-                        </div>
-                    </div>
-                    <form action="{{ route('jfadmin::show.manageuser.permissions') }}">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">所属分组</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" name="cate" style="padding: 0 12px;">
-                                            <option value="">选择分组</option>
-                                            @foreach($permission_extra_cates as $item)
-                                            <option value="{{ $item }}" {{  !empty($request_data['cate']) && $request_data['cate'] == $item ? 'selected' : '' }}>{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">权限</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="name" class="form-control" value="{{ $request_data['name'] ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">路由</label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="route" class="form-control" value="{{ $request_data['route'] ?? '' }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary">搜索</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover golden-table">
-                            <colgroup>
-                                <col width="40px">
-                                <col width="80px">
-                                <col width="200px">
-                                <col>
-                                <col width="380px">
-                                <col width="200px">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
-                                    <th>ID</th>
-                                    <th>分组</th>
-                                    <th>权限</th>
-                                    <th>路由</th>
-                                    <th>创建时间</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($list as $item)
-                                <tr data-id="{{ $item->id }}">
-                                    <td><label class="m-b-none"><input type="checkbox" name="ids[]" class="id_class i-checks" value="{{ $item->id }}"></label></td>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->permissionExtra->extra_cate }}</td>
-                                    <td>{{ $item->permissionExtra->extra_name }}</td>
-                                    <td class="td-break">
-                                        <div style="width: 380px;">{{ $item->name }}</div>
-                                    </td>
-                                    <td>{{ $item->created_at }}</td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>权限列表</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content clearfix">
+            <div class="row form-group">
+                <div class="col-md-6">
+                    <a href="javascript:" class="btn btn-default" id="detect-btn" data-url="{{ route('jfadmin::manageuser.permissions.detect') }}">检测</a>
+                    <a href="javascript:" class="btn btn-default" id="group-btn" data-url="{{ route('jfadmin::manageuser.permissions.group') }}">分组</a>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#jf-search-form"><i class="fa fa-filter"></i> 筛选</button>
                 </div>
             </div>
+            <form action="{{ route('jfadmin::show.manageuser.permissions') }}" id="jf-search-form" class="collapse {{ ($request_data['jf_search'] ?? '') ? 'show' : '' }}">
+                <input type="hidden" name="jf_search" value="1">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">所属分组</label>
+                            <div class="col-md-8">
+                                <select class="form-control" name="cate" style="padding: 0 12px;">
+                                    <option value="">选择分组</option>
+                                    @foreach($permission_extra_cates as $item)
+                                    <option value="{{ $item }}" {{  !empty($request_data['cate']) && $request_data['cate'] == $item ? 'selected' : '' }}>{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">权限</label>
+                            <div class="col-md-8">
+                                <input type="text" name="name" class="form-control" value="{{ $request_data['name'] ?? '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label">路由</label>
+                            <div class="col-md-8">
+                                <input type="text" name="route" class="form-control" value="{{ $request_data['route'] ?? '' }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover golden-table">
+                    <colgroup>
+                        <col width="40px">
+                        <col width="80px">
+                        <col width="200px">
+                        <col>
+                        <col width="380px">
+                        <col width="200px">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><label class="m-b-none"><input type="checkbox" class="checkbox_all i-checks" data-target=".id_class"></label></th>
+                            <th>ID</th>
+                            <th>分组</th>
+                            <th>权限</th>
+                            <th>路由</th>
+                            <th>创建时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($list as $item)
+                        <tr data-id="{{ $item->id }}">
+                            <td><label class="m-b-none"><input type="checkbox" name="ids[]" class="id_class i-checks" value="{{ $item->id }}"></label></td>
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->permissionExtra->extra_cate }}</td>
+                            <td>{{ $item->permissionExtra->extra_name }}</td>
+                            <td class="td-break">
+                                <div style="width: 380px;">{{ $item->name }}</div>
+                            </td>
+                            <td>{{ $item->created_at }}</td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="1000">{{ __('jfadmin::jfadmin.empty') }}</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            @include('jfadmin::layouts.pagination', ['paginator' => $list->appends($request_data)])
         </div>
     </div>
 </div>
