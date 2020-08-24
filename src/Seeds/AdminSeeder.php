@@ -16,6 +16,8 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        activity()->disableLogging();
+
         AdminUser::truncate();
         $user = AdminUser::create([
             'name' => 'admin',
