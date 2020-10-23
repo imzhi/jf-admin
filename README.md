@@ -1,4 +1,4 @@
-jf-admin 是基于 Laravel 5.5+ 的扩展包，助你构建自己的后台管理系统。
+jf-admin 是基于 Laravel 5.5+ 的扩展包（支持 Laravel 5.5+, 6.x, 7.x），助你构建自己的后台管理系统。
 
 :star2: __演示站点：__
 
