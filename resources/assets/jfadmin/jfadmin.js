@@ -9,9 +9,12 @@
                     const parse = $.parseJSON(resp.responseText);
                     if (parse && parse.errors) {
                         const key = Object.keys(parse.errors)[0];
-                        JFA.swalError(parse.errors[key][0], {shift: 6});
+                        JFA.swalError(parse.errors[key][0]);
                     }
                     return false;
+                } else if (resp.status === 419) {
+                    const parse = $.parseJSON(resp.responseText);
+                    JFA.swalError(parse.message);
                 } else {
                     try {
                         const parse = $.parseJSON(resp.responseText);
